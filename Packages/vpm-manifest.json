@@ -1,0 +1,137 @@
+{
+  "dependencies": {
+    "com.vrchat.avatars": {
+      "version": "3.9.0"
+    },
+    "jp.suzuryg.face-emo": {
+      "version": "1.5.5"
+    },
+    "cn.org.vrcd.vpm.vrchat-sdk-patcher": {
+      "version": "0.6.3"
+    },
+    "com.anatawa12.gists": {
+      "version": "0.19.0"
+    },
+    "enitimeago.non-destructive-mmd": {
+      "version": "1.2.0"
+    },
+    "vrchat.blackstartx.gesture-manager": {
+      "version": "3.9.5"
+    },
+    "lyuma.av3emulator": {
+      "version": "3.4.9"
+    },
+    "nadena.dev.ndmf": {
+      "version": "1.9.4"
+    },
+    "com.anatawa12.avatar-optimizer": {
+      "version": "1.8.14"
+    },
+    "cn.org.vrcd.vpm.vrchat-sdk-patcher.avatars": {
+      "version": "0.6.3"
+    },
+    "com.poiyomi.toon": {
+      "version": "9.2.79"
+    },
+    "dev.vrlabs.av3manager": {
+      "version": "2.1.0"
+    },
+    "com.vrcfury.vrcfury": {
+      "version": "1.1258.0"
+    },
+    "nadena.dev.modular-avatar": {
+      "version": "1.14.3"
+    },
+    "jp.lilxyzw.liltoon": {
+      "version": "1.10.3"
+    }
+  },
+  "locked": {
+    "com.vrchat.base": {
+      "version": "3.8.2",
+      "dependencies": {}
+    },
+    "com.vrchat.avatars": {
+      "version": "3.8.2",
+      "dependencies": {
+        "com.vrchat.base": "3.8.2"
+      }
+    },
+    "jp.suzuryg.face-emo": {
+      "version": "1.5.5",
+      "dependencies": {}
+    },
+    "cn.org.vrcd.vpm.vrchat-sdk-patcher": {
+      "version": "0.6.3",
+      "dependencies": {
+        "com.vrchat.base": "^3.5.0"
+      }
+    },
+    "com.anatawa12.gists": {
+      "version": "0.19.0",
+      "dependencies": {}
+    },
+    "enitimeago.non-destructive-mmd": {
+      "version": "1.2.0",
+      "dependencies": {
+        "com.vrchat.avatars": ">=3.7.0",
+        "nadena.dev.ndmf": ">=1.5.0 <2.0.0-a"
+      }
+    },
+    "vrchat.blackstartx.gesture-manager": {
+      "version": "3.9.5",
+      "dependencies": {
+        "com.vrchat.avatars": ">=3.5.2 <3.10.X"
+      }
+    },
+    "lyuma.av3emulator": {
+      "version": "3.4.9",
+      "dependencies": {
+        "com.vrchat.avatars": "^3.1.0"
+      }
+    },
+    "nadena.dev.ndmf": {
+      "version": "1.9.4",
+      "dependencies": {}
+    },
+    "com.anatawa12.avatar-optimizer": {
+      "version": "1.8.14",
+      "dependencies": {
+        "com.vrchat.avatars": ">=3.7.0 <3.10.0",
+        "nadena.dev.ndmf": "^1.6.0"
+      }
+    },
+    "cn.org.vrcd.vpm.vrchat-sdk-patcher.avatars": {
+      "version": "0.6.3",
+      "dependencies": {
+        "cn.org.vrcd.vpm.vrchat-sdk-patcher": "0.6.3",
+        "com.vrchat.avatars": "^3.5.0"
+      }
+    },
+    "com.poiyomi.toon": {
+      "version": "9.2.79",
+      "dependencies": {}
+    },
+    "dev.vrlabs.av3manager": {
+      "version": "2.1.0",
+      "dependencies": {
+        "com.vrchat.avatars": "3.2 - 3.8"
+      }
+    },
+    "com.vrcfury.vrcfury": {
+      "version": "1.1258.0",
+      "dependencies": {}
+    },
+    "nadena.dev.modular-avatar": {
+      "version": "1.14.3",
+      "dependencies": {
+        "com.vrchat.avatars": ">=3.7.4",
+        "nadena.dev.ndmf": ">=1.9.2 <2.0.0-a"
+      }
+    },
+    "jp.lilxyzw.liltoon": {
+      "version": "1.10.3",
+      "dependencies": {}
+    }
+  }
+}

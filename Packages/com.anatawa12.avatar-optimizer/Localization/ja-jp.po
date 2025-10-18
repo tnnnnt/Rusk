@@ -1,0 +1,856 @@
+msgid ""
+msgstr ""
+"Language: ja-jp\n"
+
+msgid "CheckForUpdate:out-of-date"
+msgstr "Avatar Optimizerの新しいバージョン、{0}が公開されています！(現在 {1})"
+
+msgid "locale:ja"
+msgstr "日本語"
+
+msgid "LegacyModularAvatarWarning:message"
+msgstr ""
+"1.7.x以前のModularAvatarがインストールされているようです。\n"
+"現在お使いのAvatarOptimizerでは、1.7.x以前のModularAvatarと互換性がありません。\n"
+"ModularAvatarを1.8.0以降に更新してください！"
+
+msgid "LegacyModularAvatarWarning:readWithNextLocale"
+msgstr "Read in English"
+
+msgid "LegacyModularAvatarWarning:nextLocale"
+msgstr "en"
+
+# region PrefabSafeSet
+
+msgid "PrefabSafeSet:label:Multi editing not supported"
+msgstr "複数選択には対応していません"
+
+msgid "PrefabSafeSet:label:Element type is not supported"
+msgstr "非対応の要素です"
+
+msgid "PrefabSafeSet:label:Add Not Supported"
+msgstr "追加には対応していません"
+
+msgid "PrefabSafeSet:label:Element to add"
+msgstr "追加する要素"
+
+msgid "PrefabSafeSet:tooltip:Element to add"
+msgstr "ここにドラッグ&ドロップして要素を追加する"
+
+msgid "PrefabSafeSet:tooltip:Force Add Button"
+msgstr "この要素を現在のprefabオーバーライドにも追加する"
+
+# , csharp-format
+msgid "PrefabSafeSet:label:Element {0}"
+msgstr "要素 {0}"
+
+# , csharp-format
+msgid "PrefabSafeSet:label:(Removed)"
+msgstr "(削除済)"
+
+# , csharp-format
+msgid "PrefabSafeSet:label:Element {0} (Added twice)"
+msgstr "要素 {0} (二重)"
+
+# , csharp-format
+msgid "PrefabSafeSet:label:(Removed but not found)"
+msgstr "(見つからないが削除済)"
+
+# endregion
+
+# start Avatar Optimizer core modules
+
+# region ClearEndpointPosition
+
+msgid "ClearEndpointPosition:description"
+msgstr ""
+"_endボーンを追加してEndpoint Positionをクリアする。\n"
+"MergeBoneを使用するときに便利です。"
+
+msgid "ClearEndpointPosition:button:Apply and Remove Component"
+msgstr "適用して今すぐcomponentを削除する"
+
+# endregion
+
+# region FreezeBlendShape
+
+msgid "FreezeBlendShape:button:Check All"
+msgstr "すべて有効にする"
+
+msgid "FreezeBlendShape:button:Invert All"
+msgstr "すべての有効/無効を入れ替える"
+
+msgid "FreezeBlendShape:warning:animation"
+msgstr ""
+"固定・除去対象である以下のBlendShapeはアニメーションされています。"
+"固定・除去されたBlendShapeはアニメーションで動かせなくなります。意図的に行っている場合はこの警告を無視してください。\n"
+"{0}"
+
+# endregion
+
+# region MakeChildren
+
+msgid "MakeChildren:description"
+msgstr "ビルド時に、指定されたGameObjectを子にする。"
+
+msgid "MakeChildren:tooltip:executeEarly"
+msgstr "早期に実行する"
+
+msgid "MakeChildren:tooltip:executeEarly"
+msgstr "MakeChildrenをModular Avatarのような多くの他ツールより先に実行する。"
+
+msgid "MakeChildren:prop:children"
+msgstr "子"
+
+msgid "MakeChildren:executeEarly does not support animation"
+msgstr "'早期に実行する'はアニメーションのパス修正が動きません。MakeChildren後のヒエラルキー用のアニメーションを使用してください。"
+
+# endregion
+
+# region MergeBone
+
+msgid "MergeBone:description"
+msgstr "このGameObjectを削除して親に統合する。"
+
+msgid "MergeBone:prop:avoidNameConflict"
+msgstr "名前の競合を避ける"
+
+msgid "MergeBone:tooltip:avoidNameConflict"
+msgstr "統合時に子GameObjectの名前を変更し、名前の重複を回避します"
+
+msgid "MergeBone:validation:onAvatarRoot"
+msgstr "MergeBoneをアバターのルートに付けることはサポートされていません。"
+
+msgid "MergeBone:validation:thereAreComponent"
+msgstr "Transform以外のコンポーネントがあります。これはサポートされていません。"
+
+msgid "MergeBone:validation:unevenScaling"
+msgstr "統合しないボーンが子孫にある場合、Scaleが均一でないボーンを統合することはサポートされていません。"
+
+# endregion
+
+# region
+
+msgid "MergePhysBone:prop:makeParent"
+msgstr "このGameObjectの子にする"
+
+msgid "MergePhysBone:tooltip:makeParent"
+msgstr "すべてのPhysBoneをこのGameObjectの子にする"
+
+msgid "MergePhysBone:error:makeParentWithChildren"
+msgstr "'このGameObjectの子にする'が有効であるにも関わらず、既に子が存在します。"
+
+msgid "MergePhysBone:error:parentDiffer"
+msgstr "統合対象のPhysBoneの親が違います。同じ親の子にするか、'このGameObjectの子にする'を使用してください。"
+
+msgid "MergePhysBone:error:noSources"
+msgstr "統合対象のPhysBoneがありません。"
+
+msgid "MergePhysBone:error:oneSource"
+msgstr "統合対象のPhysBoneが1つしかありません。2つ以上のPhysBoneを指定してください。"
+
+msgid "MergePhysBone:error:multiChildType"
+msgstr "Multi Child TypeがIgnoreでないPhysBoneがあります。"
+
+msgid "MergePhysBone:error:unsupportedPbVersion"
+msgstr "このPhysBoneバージョンは(まだ)Avatar Optimizerによって対応されていません。\n"
+"作者にtwitter (@anatawa12_vrc)またはGitHub (anatawa12/AvatarOptimizer)で連絡してください！"
+
+msgid "MergePhysBone:message:fix-yaw-pitch"
+msgstr "ボーンを回転させてRollの値を揃える"
+
+msgid "MergePhysBone:error:differValues"
+msgstr "複数の統合対象の間で値に差異があります。以下の値は同じ値にするかOverrideする必要があります: {0}"
+
+msgid "MergePhysBone:error:differValueSingle"
+msgstr "複数の統合対象の間で値に差異があります。同じ値にするかOverrideする必要があります"
+
+msgid "MergePhysBone:warning:differChainLength"
+msgstr "複数の統合対象の間でチェーンの長さが異なります。短いチェーンのPBは元よりも太くなる可能性があります。"
+
+msgid "MergePhysBone:error:LimitRotationFix:SkewScaling"
+msgstr ""
+"Scaleが均一でないボーンの角度制限を統合することはサポートされていません。\n"
+"角度制限の設定をFix以外にするか、Scaleを均一にしてください。"
+
+msgid "MergePhysBone:error:LimitRotationFix:DifferRotation"
+msgstr ""
+"角度制限を統合できる状態ではありません。\n"
+"統合対象の角度制限の値を揃えるか、角度制限の設定をFix以外にしてください。"
+
+msgid "MergePhysBone:error:LimitRotationFix:DifferRotation:description"
+msgstr ""
+"角度制限の統合は、ボーンに対する捻るような回転(Roll)の値は揃えることができますが、他の軸の回転は揃えることができません。\n"
+"Roll回転の軸はローカル座標系におけるX軸になります。Yaw回転が含まれている場合はPBのInspectorにあるRollの表示とは異なることがあります。"
+
+msgid "MergePhysBone:error:LimitRotationFix:NonZeroEndpointPosition"
+msgstr ""
+"角度制限の設定がFixですが、Endpoint Positionが空ではありません。\n"
+"Endpoint Positionを空にするか、Endpoint Positionの設定をClearにするか、角度制限の設定をFix以外にしてください。"
+
+msgid "MergePhysBone:dialog:versionInfo:title"
+msgstr "バージョンについて" 
+
+msgid "MergePhysBone:dialog:versionInfo:message"
+msgstr ""
+"VRCPhysBoneのバージョンを変更するとcomponentの動作が変わります。\n" 
+"一部の値が違った動作をし、手動で再設定が必要な場合があります。\n\n" 
+"バージョンによる差異についてはドキュメントを読んでください。" 
+
+msgid "MergePhysBone:dialog:versionInfo:openDoc"
+msgstr "ドキュメントを開く(英語)" 
+
+msgid "MergePhysBone:dialog:versionInfo:revert"
+msgstr "戻す"
+
+msgid "MergePhysBone:dialog:versionInfo:continue"
+msgstr "そのまま続行する"
+
+msgid "MergePhysBone:prop:merged"
+msgstr "統合済み"
+
+msgid "MergePhysBone:prop:components"
+msgstr "コンポーネント"
+
+# endregion
+
+# region MergeSkinnedMesh
+
+msgid "MergeSkinnedMesh:warning:blendShapeWeightMismatch"
+msgstr ""
+"統合対象のSkinnedMeshRenderer間でBlendShape '{0}'の値が揃っていません。\n"
+"どの値を適用するかが不定になってしまうため、統合対象の同名BlendShapeの値は揃えるか固定・除去してください。"
+
+msgid "MergeSkinnedMesh:warning:VRM:FirstPersonFlagsMismatch"
+msgstr ""
+"統合対象のRenderer間でFirstPersonFlagsの値が揃っていなかったため、'{0}'に統一されました。\n"
+"MergeSkinnedMeshで統合されるRendererのFirstPersonFlagsの値は揃えることを推奨します。"
+
+msgid "MergeSkinnedMesh:warning:MeshIsNotNone"
+msgstr ""
+"SkinnedMeshRendererのMeshがNoneではありません！\n"
+"MergeSkinnedMeshは新規のSkinnedMeshRendererがついたGameObjectに追加するべきです！"
+
+msgid "MergeSkinnedMesh:validation:self-recursive"
+msgstr "統合対象のスキンメッシュレンダラーに、MergeSkinnedMesh自身のスキンメッシュレンダラーが含まれています！"
+
+msgid "MergeSkinnedMesh:warn:TraditionalBlendShapeMode"
+msgstr ""
+"v1.7.x互換モードが選択されています。\n"
+"このモードはv1.7.x以前のAvatar Optimizerとの互換性を維持するためにのみ存在します。\n"
+"他のモードを選択することを検討してください。"
+
+msgid "MergeSkinnedMesh:prop:blendShapeMode"
+msgstr "BlendShapeモード"
+
+msgid "MergeSkinnedMesh:prop:blendShapeMode:MergeSameName"
+msgstr "同名のBlendShapeを統合する"
+
+msgid "MergeSkinnedMesh:prop:blendShapeMode:RenameToAvoidConflict"
+msgstr "BlendShape名を自動変更して重複を避ける"
+
+msgid "MergeSkinnedMesh:prop:blendShapeMode:TraditionalCompability"
+msgstr "v1.7.x互換モード"
+
+msgid "MergeSkinnedMesh:prop:renderers"
+msgstr "スキンメッシュレンダラー"
+
+msgid "MergeSkinnedMesh:prop:staticRenderers"
+msgstr "静的レンダラー"
+
+msgid "MergeSkinnedMesh:prop:removeEmptyRendererObject"
+msgstr "空のレンダラーオブジェクトを削除する"
+
+msgid "MergeSkinnedMesh:prop:skipEnablementMismatchedRenderers"
+msgstr "有効無効状態が統合先と異なるレンダラーを統合しない"
+
+msgid "MergeSkinnedMesh:prop:copyEnablementAnimation"
+msgstr "有効無効状態に関するアニメーションをコピーする"
+
+msgid "MergeSkinnedMesh:label:Merge Materials"
+msgstr "マテリアルの統合"
+
+msgid "MergeSkinnedMesh:label:Merge"
+msgstr "統合する"
+
+msgid "MergeSkinnedMesh:label:Renderers"
+msgstr "レンダラー:"
+
+msgid "MergeSkinnedMesh:error:mix-normal-existence"
+msgstr ""
+"法線があるメッシュとないメッシュの両方を1つに統合する操作には対応していません。"
+"法線が含まれるようにモデルのインポート設定を変更してください！"
+
+msgid "MergeSkinnedMesh:error:blendShape-animated-by-multiple-renderers"
+msgstr "統合対象のメッシュ間で、以下のBlendShapeに対するアニメーションが揃っていません: {0}"
+
+msgid "MergeSkinnedMesh:error:blendShape-animated-by-multiple-renderers:description"
+msgstr ""
+"統合対象のメッシュ間で、同名のBlendShapeに対するアニメーションが揃っていません。\n"
+"同名のBlendShapeを統合するように設定されていますが、アニメーションが揃っていないと統合後の動作を決定することができません。\n"
+"\n"
+"そのBlendShapeを操作しているアニメーションの一部を削除するか、同じようにアニメーションされるようにしてください。"
+
+msgid "MergeSkinnedMesh:warning:removeZeroSizedPolygonOnSources"
+msgstr "Remove Zero Sized Polygonsは遅めに処理されるため、統合対象のメッシュにつけても効果がありません"
+
+msgid "MergeSkinnedMesh:error:clothOnSources"
+msgstr "Clothコンポーネントが付いているため、このメッシュを統合することができません。"
+
+msgid "MergeSkinnedMesh:error:clothOnSources:description"
+msgstr "このメッシュを統合対象から除外するか、このメッシュからClothコンポーネントを削除してください。"
+
+msgid "MergeSkinnedMesh:warning:no-root-bone"
+msgstr "統合先のメッシュにRoot Boneが設定されていないため、予期しない動作が引き起こされる場合があります。"
+
+msgid "MergeSkinnedMesh:warning:no-root-bone:description"
+msgstr "MergeSkinnedMeshは統合先のメッシュのRoot Boneを自動では設定しません。"
+
+msgid "MergeSkinnedMesh:warning:no-root-bone:hint"
+msgstr "統合先のメッシュのRoot Boneを手動で設定する必要があります。\n"
+"Modular Avatarを使用している場合は、アバターのルートにMA Mesh Settingsコンポーネントを追加して設定することにより、アバター全体のRoot Boneをまとめて設定することもできます。"
+
+msgid "MergeSkinnedMesh:warning:no-probe-anchor"
+msgstr "統合先のメッシュにAnchor Overrideが設定されていないため、予期しない動作が引き起こされる場合があります。"
+
+msgid "MergeSkinnedMesh:warning:no-probe-anchor:description"
+msgstr "MergeSkinnedMeshは統合先のメッシュのAnchor Overrideを自動では設定しません。"
+
+msgid "MergeSkinnedMesh:warning:no-probe-anchor:hint"
+msgstr "統合先のメッシュのAnchor Overrideを手動で設定する必要があります。\n"
+"Modular Avatarを使用している場合は、アバターのルートにMA Mesh Settingsコンポーネントを追加して設定することにより、アバター全体のAnchor Overrideをまとめて設定することもできます。"
+
+msgid "MergeSkinnedMesh:copy-enablement-animation:error:enablement-of-merged-mesh-is-animated"
+msgstr "統合先のSkinnedMeshRendererの有効無効状態がアニメーションされています。"
+
+msgid "MergeSkinnedMesh:copy-enablement-animation:error:enablement-of-merged-mesh-is-animated:description"
+msgstr "'有効無効状態に関するアニメーションをコピーする'が有効な場合、統合先のSkinnedMeshRendererの有効無効状態(enabled)を操作するアニメーションがMerge Skinned Meshによって作成されます。\n"
+"そのため、その項目を手動でアニメーションすることはできません。"
+
+msgid "MergeSkinnedMesh:copy-enablement-animation:error:too-many-activeness-animation"
+msgstr "以下の統合対象のメッシュの有効無効状態が、複数のプロパティをアニメーションすることによって決定されています。"
+
+msgid "MergeSkinnedMesh:copy-enablement-animation:error:too-many-activeness-animation:description"
+msgid "'有効無効状態に関するアニメーションをコピーする'は、有効無効状態に関する操作を統合先のSkinnedMeshRendererの有効無効状態(enabled)に対して適用するように設計されています。\n"
+"そのため、SkinnedMeshRendererの有効無効状態(enabled)とGameObjectの有効無効状態(activeSelf)の両方や、複数階層の有効無効状態(activeSelf)をアニメーションで操作しているような場合には、コピーすることができません。"
+
+msgid "MergeSkinnedMesh:copy-enablement-animation:error:activeness-animation-of-source-mismatch"
+msgid "統合対象のメッシュ間で、有効無効状態に関するアニメーションが揃っていません。"
+
+msgid "MergeSkinnedMesh:copy-enablement-animation:error:activeness-animation-of-source-mismatch:description"
+msgid "'有効無効状態に関するアニメーションをコピーする'は、統合対象の間で有効無効状態が同じようにアニメーションされている場合にのみ適用できます。"
+
+# endregion
+
+# region MergeToonLitMaterial
+
+msgid "MergeToonLitMaterial:description"
+msgstr ""
+"複数のVRChat Mobile ToonLitマテリアルを統合するためのマテリアルです。\n"
+"Questの制限を回避するためのコンポーネントです。"
+
+msgid "MergeToonLitMaterial:button:Add Merged Material"
+msgstr "統合したマテリアルを追加"
+
+msgid "MergeToonLitMaterial:button:Add Source"
+msgstr "統合対象を追加"
+
+msgid "MergeToonLitMaterial:button:Generate Preview"
+msgstr "プレビューを生成"
+
+msgid "MergeToonLitMaterial:label:Texture Size"
+msgstr "テクスチャのサイズ"
+
+# endregion
+
+# region RemoveMeshInBox
+
+msgid "RemoveMeshInBox:prop:removePolygonsInOrOut"
+msgstr "削除するポリゴン"
+
+msgid "RemoveMeshInBox:prop:removePolygonsInOrOut:inBox"
+msgstr "箱の内側"
+
+msgid "RemoveMeshInBox:prop:removePolygonsInOrOut:outOfBox"
+msgstr "箱の外側"
+
+msgid "RemoveMeshInBox:BoundingBox:prop:center"
+msgstr "中心"
+
+msgid "RemoveMeshInBox:BoundingBox:prop:size"
+msgstr "大きさ"
+
+msgid "RemoveMeshInBox:BoundingBox:prop:rotation"
+msgstr "回転"
+
+# endregion
+
+# region RemoveMeshByBlendShape
+
+msgid "RemoveMeshByBlendShape:description"
+msgstr "指定されたBlendShapeによって動かされる頂点とそのポリゴンを削除します"
+
+msgid "RemoveMeshByBlendShape:editor:automaticallySetWeightWhenToggle"
+msgstr "プレビューのために、切り替えたBlendShapeの値を自動的に変更する"
+
+msgid "RemoveMeshByBlendShape:tooltip:automaticallySetWeightWhenToggle"
+msgstr "このオプションが有効な間にBlendShapeの指定を切り替えた場合、その値を自動的に100か0に設定します。"
+
+msgid "RemoveMeshByBlendShape:tooltip:automaticallySetWeightWhenToggle:noRenderer"
+msgstr "SkinnedMeshRendererがないため、この機能を使用することができません。"
+
+msgid "RemoveMeshByBlendShape:tooltip:automaticallySetWeightWhenToggle:noMesh"
+msgstr "Meshがないため、この機能を使用することができません。"
+
+msgid "RemoveMeshByBlendShape:prop:Tolerance"
+msgstr "許容差"
+
+msgid "RemoveMeshByBlendShape:tooltip:Tolerance"
+msgstr ""
+"選択されたBlendShapeのいずれかによって頂点がこの値より大きく動かされている場合、その頂点は削除されます。\n"
+"意図していない頂点が削除されてしまった場合はこの値を大きくしてみてください。思った通りに頂点が削除されなかった場合はこの値を小さくしてみてください。\n"
+"通常、この値は小さな数値になります。"
+
+msgid "RemoveMeshByBlendShape:button:Check All"
+msgstr "すべて有効にする"
+
+msgid "RemoveMeshByBlendShape:button:Invert All"
+msgstr "すべての有効/無効を入れ替える"
+
+# endregion
+
+# region RemoveZeroSizedPolygon
+
+msgid "RemoveZeroSizedPolygon:description"
+msgstr "面積がゼロのポリゴンを削除します。"
+
+# endregion
+
+# region RemoveMeshByMask
+
+msgid "RemoveMeshByMask:description"
+msgstr "マスクテクスチャで指定した範囲のポリゴンを削除します。"
+
+msgid "RemoveMeshByMask:prop:enabled"
+msgstr "{0}番のマテリアルスロットに適用"
+
+msgid "RemoveMeshByMask:prop:mask"
+msgstr "マスクテクスチャ"
+
+msgid "RemoveMeshByMask:prop:mode"
+msgstr "削除モード"
+
+msgid "RemoveMeshByMask:error:maskIsNone"
+msgstr "マスクテクスチャが設定されていません。"
+
+msgid "RemoveMeshByMask:error:maskIsNotReadable"
+msgstr "マスクテクスチャが読み取り可能ではありません。"
+
+msgid "RemoveMeshByMask:error:maskIsNotReadable:description"
+msgstr "マスクテクスチャのRead/Write Enabledが有効になっていることを確認してください。"
+
+msgid "RemoveMeshByMask:error:unknownMode"
+msgstr "未知の削除モードが指定されています。"
+
+msgid "RemoveMeshByMask:warning:NoMesh"
+msgstr "Skinned Mesh RendererにMeshが設定されていません。"
+
+msgid "RemoveMeshByMask:button:makeReadable"
+msgstr "読み取り可能にする"
+
+msgid "RemoveMeshByMask:tooltip:textureIsNotImported"
+msgstr "画像ファイルから読み込まれたマスクテクスチャではありません。"
+
+# endregion
+
+# region Remove Mesh By UV Tile
+
+msgid "RemoveMeshByUVTile:warning:NoMesh"
+msgstr "Skinned Mesh RendererにMeshが設定されていません。"
+
+msgid "RemoveMeshByUVTile:prop:MaterialSlot"
+msgstr "{0}番のマテリアルスロット"
+
+msgid "RemoveMeshByUVTile:prop:Tile"
+msgstr "{0}番のタイル"
+
+msgid "RemoveMeshByUVTile:prop:UVChannel"
+msgstr "UVチャンネル"
+
+msgid "RemoveMeshByUVTile:error:uvChannelOutOfRange"
+msgstr "UVチャンネルの{0}番は範囲外です。"
+
+# endregion
+
+# region MaskTextureEditor
+
+msgid "MaskTextureEditor:create"
+msgstr "作成"
+
+msgid "MaskTextureEditor:edit"
+msgstr "編集"
+
+msgid "MaskTextureEditor:title"
+msgstr "AAO マスクテクスチャエディター"
+
+msgid "MaskTextureEditor:renderer"
+msgstr "スキンメッシュレンダラー"
+
+msgid "MaskTextureEditor:subMesh"
+msgstr "マテリアルスロット"
+
+msgid "MaskTextureEditor:subMeshIndex"
+msgstr "{0}番"
+
+msgid "MaskTextureEditor:texture"
+msgstr "マスクテクスチャ"
+
+msgid "MaskTextureEditor:save"
+msgstr "保存する"
+
+msgid "MaskTextureEditor:viewScale"
+msgstr "表示倍率 (Scroll)"
+
+msgid "MaskTextureEditor:viewOpacity"
+msgstr "表示透明度"
+
+msgid "MaskTextureEditor:resetView"
+msgstr "表示をウィンドウに合わせる"
+
+msgid "MaskTextureEditor:brushSize"
+msgstr "ブラシサイズ (Shift + Scroll)"
+
+msgid "MaskTextureEditor:brushColor"
+msgstr "ブラシカラー"
+
+msgid "MaskTextureEditor:black"
+msgstr "黒"
+
+msgid "MaskTextureEditor:white"
+msgstr "白"
+
+msgid "MaskTextureEditor:fillBlack"
+msgstr "黒で塗りつぶす"
+
+msgid "MaskTextureEditor:fillWhite"
+msgstr "白で塗りつぶす"
+
+msgid "MaskTextureEditor:inverse"
+msgstr "色を反転させる"
+
+msgid "MaskTextureEditor:saveChangesMessage"
+msgstr "保存されていない変更があります。保存しますか？"
+
+msgid "MaskTextureEditor:saveChangesButtonSave"
+msgstr "保存"
+
+msgid "MaskTextureEditor:saveChangesButtonDiscard"
+msgstr "破棄"
+
+msgid "MaskTextureEditor:saveChangesButtonCancel"
+msgstr "キャンセル"
+
+msgid "MaskTextureEditor:errorTitle"
+msgstr "エラー"
+
+msgid "MaskTextureEditor:errorMessageCreateFailed"
+msgstr "テクスチャの作成に失敗しました。詳細はログを参照してください。"
+
+msgid "MaskTextureEditor:errorMessageSaveFailed"
+msgstr "テクスチャの保存に失敗しました。詳細はログを参照してください。"
+
+# endregion
+
+# region RenameBlendShape
+
+# used in inspector
+
+msgid "RenameBlendShape:removed"
+msgstr "(削除済)"
+
+msgid "RenameBlendShape:original"
+msgstr "元の名前"
+
+msgid "RenameBlendShape:changed"
+msgstr "変更後の名前"
+
+msgid "RenameBlendShape:error:empty-name-some"
+msgstr "変更後の名前が空になっているものがあります。"
+
+msgid "RenameBlendShape:warning:name-conflict-some"
+msgstr "変更後の名前が重複しているものがあります。"
+
+msgid "RenameBlendShape:error:empty-name-this"
+msgstr "変更後の名前が空です。"
+
+msgid "RenameBlendShape:warning:name-conflict-this"
+msgstr "変更後の名前が他と重複しています。"
+
+# used in NDMF Console
+
+msgid "RenameBlendShape:error:empty-name"
+msgstr "BlendShape '{0}' の変更後の名前が空です。BlendShape名を空にすることはできません。"
+
+msgid "RenameBlendShape:error:after-name-conflict"
+msgstr "BlendShape名 '{0}' は重複しています。Rename BlendShapeコンポーネントによる名前変更で同名のBlendShapeを作成することはできません。"
+
+# endregion
+
+# region AvatarGlobalComponent
+
+msgid "AvatarGlobalComponent:NotOnAvatarRoot"
+msgstr "このコンポーネントはアバターのルートに付ける必要があります。"
+
+# endregion
+
+# region NoSourceEditSkinnedMeshComponent
+
+msgid "NoSourceEditSkinnedMeshComponent:HasSourceSkinnedMeshComponent"
+msgstr "このコンポーネントはMerge Skinned Meshコンポーネントに対応していません。\n"
+"そのため、このコンポーネントは統合先のメッシュではなく統合対象のメッシュに追加してください。"
+
+# endregion
+
+# region UnusedBonesByReferencesTool
+
+# EditorOnlyなメッシュのみから参照されているボーンをEditorOnlyにします
+msgid "UnusedBonesByReferencesTool:description"
+msgstr ""
+"NarazakaさんによるUnusedBonesByReferencesTool (https://narazaka.booth.pm/items/3831781)を実行します。\n"
+"EditorOnlyなメッシュからしか参照がないボーンをEditorOnlyにするツールです。"
+
+msgid "UnusedBonesByReferencesTool:prop:preserveEndBone"
+msgstr "endボーンを残す"
+
+# "親がactiveなendボーンを削除しない(ON推奨)"
+msgid "UnusedBonesByReferencesTool:tooltip:preserveEndBone"
+msgstr "チェックされている場合、親がactiveなendボーンを削除しません。"
+
+msgid "UnusedBonesByReferencesTool:prop:detectExtraChild"
+msgstr "他の子オブジェクトを認識する"
+
+# "子にボーン以外を持つボーンを削除しない"
+msgid "UnusedBonesByReferencesTool:tooltip:detectExtraChild"
+msgstr "チェックされている場合、子にボーン以外を持つボーンを削除しません。"
+
+msgid "UnusedBonesByReferencesTool:suggestMigrate"
+msgstr ""
+"UnusedBonesByReferencesToolは非推奨です！ Trace and Optimizeには同じ機能が含まれており、より賢い処理を行います。\n"
+"下のボタンを押し、Trace and Optimizeに移行しませんか？ (設定は引き継がれます)"
+
+msgid "UnusedBonesByReferencesTool:migrate"
+msgstr "Trace and Optimizeに移行する"
+
+msgid "UnusedBonesByReferencesTool:migrationFinished:title"
+msgstr "移行完了"
+
+msgid "UnusedBonesByReferencesTool:migrationFinished:description"
+msgstr "Trace and Optimizeへの移行が完了しました！"
+
+# endregion
+
+# region TraceAndOptimize
+
+msgid "TraceAndOptimize:description"
+msgstr "このコンポーネントをアバターにつけると、アバターを走査して自動的にできる限りの最適化を行います。"
+
+msgid "TraceAndOptimize:prop:optimizeBlendShape"
+msgstr "BlendShapeを最適化する"
+
+msgid "TraceAndOptimize:prop:removeUnusedObjects"
+msgstr "使われていないObjectを自動的に削除する"
+
+msgid "TraceAndOptimize:prop:optimizePhysBone"
+msgstr "PhysBoneの設定を最適化する"
+
+msgid "TraceAndOptimize:prop:optimizeAnimator"
+msgstr "アニメーターを最適化する"
+
+msgid "TraceAndOptimize:prop:mergeSkinnedMesh"
+msgstr "スキンメッシュレンダラーを統合する"
+
+msgid "TraceAndOptimize:prop:allowShuffleMaterialSlots"
+msgstr "マテリアルスロットの前後関係を変えることを許可する"
+
+msgid "TraceAndOptimize:prop:optimizeTexture"
+msgstr "テクスチャを最適化する"
+
+msgid "TraceAndOptimize:tooltip:allowShuffleMaterialSlots"
+msgstr "マテリアルスロットの前後関係を変えることでドローコールを減らすことを許可します。これは描画順に影響を与える可能性があります。"
+
+msgid "TraceAndOptimize:prop:mmdWorldCompatibility"
+msgstr "MMDワールドとの互換性"
+
+msgid "TraceAndOptimize:tooltip:mmdWorldCompatibility"
+msgstr "MMD用BlendShapeを固定しないなどのMMDワールドとの互換性機能を有効にします。"
+
+msgid "TraceAndOptimize:prop:advancedOptimization"
+msgstr "高度な最適化"
+
+msgid "TraceAndOptimize:note:advancedOptimization"
+msgstr ""
+"これらの設定はアバターに更なる最適化を加えますが、アバターの動作を壊してしまう可能性もあります。\n"
+"問題が発生した場合は、高度な最適化の設定を無効にしてください。"
+
+msgid "TraceAndOptimize:prop:debugOptions"
+msgstr "デバッグ用オプション"
+
+msgid "TraceAndOptimize:warn:debugOptions"
+msgstr "デバッグ用オプションはAvatarOptimizerのバグを回避するための設定です。\n"
+"これらの設定を変更すると、アバターが適切に最適化されなくなる可能性があります。\n"
+"また、一部のデバッグ用オプションが正しく機能しなかったり、その動作が変更されたりする可能性があります。ご注意ください！"
+
+msgid "TraceAndOptimize:warn:unknown-type"
+msgstr "未知のコンポーネント'{0}'を検出しました！"
+
+msgid "TraceAndOptimize:warn:unknown-type:description"
+msgstr "Avatar Optimizerにとって未知のコンポーネントが見つかりました。これにより最適化処理の品質が低下し、処理後のアバターが壊れる可能性があります。(元のアバターには影響しません)"
+
+msgid "TraceAndOptimize:warn:unknown-type:hint"
+msgstr ""
+"アバターが壊れていない場合、この警告は無視しても問題ありません。\n"
+"\n"
+"このコンポーネントがあなたのツールのものである場合は、Avatar Optimizerにコンポーネントを登録することを検討してください。"
+"詳しくは https://vpm.anatawa12.com/avatar-optimizer/ja/docs/developers/make-your-components-compatible-with-aao/ をご覧ください。\n"
+"\n"
+"このコンポーネントがあなたの使っているツールのものである場合は、ツール作者にAvatar Optimizerへのコンポーネント登録を依頼するか、"
+"有名なツールであればAvatar Optimizerに対応を依頼してください。\n"
+"\n"
+"ツール作者に依頼する場合は、開発者向けドキュメントへのリンク( https://vpm.anatawa12.com/avatar-optimizer/ja/docs/developers/make-your-components-compatible-with-aao/ )を共有してください。"
+
+msgid "TraceAndOptimize:prop:preserveEndBone"
+msgstr "endボーンを残す"
+
+msgid "TraceAndOptimize:tooltip:preserveEndBone"
+msgstr "親が削除されていないendボーンを削除しないようにします。"
+
+msgid "TraceAndOptimize:prop:removeZeroSizedPolygons"
+msgstr "面積がゼロのポリゴンを自動的に削除する"
+
+msgid "TraceAndOptimize:OptimizePhysBone:UnknownPhysBoneColliderShape"
+msgstr "未知のPhysBone Collider形状'{0}'が指定されています。"
+
+# endregion
+
+#region ApplyObjectMapping
+
+msgid "ApplyObjectMapping:VRCAvatarDescriptor:eyelids BlendShape Removed"
+msgstr "瞬き用のBlendShapeが固定・除去されているか、設定されていません。"
+
+msgid "ApplyObjectMapping:VRCAvatarDescriptor:eyelids BlendShape Removed:description"
+msgstr "VRChatでは、瞬き用のBlendShapeとして存在しないものが指定されているか、設定されていない項目がある場合、瞬きが全く機能しなくなります。"
+
+msgid "ApplyObjectMapping:VRCAvatarDescriptor:viseme BlendShape Removed"
+msgstr "リップシンク用のBlendShapeが固定・除去されているか、設定されていません。"
+
+msgid "ApplyObjectMapping:VRCAvatarDescriptor:viseme BlendShape Removed:description"
+msgstr "VRChatでは、リップシンク用のBlendShapeとして存在しないものが指定されているか、設定されていない項目がある場合、すべてのリップシンク用のBlendShapeが機能しなくなります。"
+
+msgid "MergeSkinnedMesh:warning:animation-mesh-hide"
+msgstr ""
+"統合先のメッシュとは異なるアニメーションで表示されるメッシュが統合対象に含まれているため、"
+"そのアニメーションによる切り替えは機能しなくなります。意図的に行っている場合はこの警告を無視してください。"
+
+msgid "MergeSkinnedMesh:warning:material-animation-differently"
+msgstr "統合対象のメッシュ間で、以下のマテリアルプロパティに対するアニメーションが異なります: {0}"
+
+msgid "MergeSkinnedMesh:warning:material-animation-differently:description"
+msgstr ""
+"統合対象のメッシュ間で、マテリアルに対するアニメーションが異なります。\n"
+"マテリアルに対するアニメーションはメッシュ全体に影響するため、意図していない部分にアニメーションが適用されてしまう可能性があります。\n"
+
+msgid "MergeSkinnedMesh:warning:material-animation-differently:hint"
+msgstr ""
+"アニメーションが統合したメッシュ全体に影響することを意図している場合は、以下のいずれかを行ってください。\n"
+"- 統合対象のメッシュのマテリアルプロパティを、共通のアニメーションクリップ内ですべて同じようにアニメーションする。\n"
+"- 統合先のメッシュをアニメーションする。\n"
+"- この警告を無視する。\n"
+"\n"
+"統合対象のすべてのメッシュを同じようにアニメーションしているにもかかわらず、この警告が表示されている場合は、複数のメッシュに対するアニメーションのさせ方が良くないかもしれません。\n"
+"Avatar Optimizerは、同じアニメーションクリップにおいて、同じ形のカーブかつ、同じState上でアニメーションされている場合に、それらが同じようにアニメーションされていると判断します。\n"
+"つまり、同じようにアニメーションしている場合でも、異なるレイヤーやアニメーションクリップからアニメーションしている場合は別のアニメーションとして認識されることになります。\n"
+"\n"
+"アニメーションが他のメッシュに影響しない場合(例えば、メッシュ上で無効になっているシェーダー機能にしか影響しない場合)は、この問題をAvatar Optimizerに報告してください。\n"
+"シェーダーが有名なものであれば、アニメーションされていないメッシュに対してもその機能が有効なのかどうかを確認する処理を追加します。\n"
+
+#endregion
+
+#region ComponentInfos
+
+msgid "ComponentInfos:VRCAvatarDescriptor:warning:UnknownLipSyncStyle"
+msgstr "リップシンクの種類として未知の種類'{0}'が指定されています。"
+
+msgid "ComponentInfos:VRCAvatarDescriptor:warning:UnknownLipSyncStyle:hint"
+msgstr "多くの場合、これはAvatar Optimizerのバグです。この警告が表示された場合は、上記のメッセージとともにこの問題を報告してください。"
+
+msgid "ComponentInfos:VRCAvatarDescriptor:warning:UnknownColliderState"
+msgstr "{1}のStandard Colliderに未知の設定'{0}'が指定されています。"
+
+msgid "ComponentInfos:VRCAvatarDescriptor:warning:UnknownColliderState:hint"
+msgstr "多くの場合、これはAvatar Optimizerのバグです。この警告が表示された場合は、上記のメッセージとともにこの問題を報告してください。"
+
+msgid "ComponentInfos:VRCAvatarDescriptor:warning:UnknownEyelidType"
+msgstr "瞬きの種類として未知の種類'{0}'が指定されています。"
+
+msgid "ComponentInfos:VRCAvatarDescriptor:warning:UnknownEyelidType:description"
+msgstr "多くの場合、これはAvatar Optimizerのバグです。この警告が表示された場合は、上記のメッセージとともにこの問題を報告してください。"
+
+#endregion
+
+#region AnimatorParser
+
+msgid "AnimatorParser:PlayableLayerControl:UnknownBlendablePlayableLayer"
+msgstr "Playable Layer Controlに未知のレイヤー'{0}'が指定されています。"
+
+msgid "AnimatorParser:AnimatorLayerControl:UnknownBlendablePlayableLayer"
+msgstr "Animator Layer Controlに未知のレイヤー'{0}'が指定されています。"
+
+msgid "AnimatorParser:AnimatorNotFoundOnAvatarRoot"
+msgstr "アバターのルートにAnimatorコンポーネントがありません。"
+
+#endregion
+
+#region MeshInfo2
+
+msgid "MeshInfo2:warning:multiPassRendering"
+msgstr ""
+"'{0}'コンポーネントを使用しているメッシュにおいて、複数マテリアルによるマルチパスレンダリングが使用されています。\n"
+"実際の負荷に大きな差はありませんが、パフォーマンスランクにおけるポリゴン数が増えるなどの影響があります。\n"
+"マルチパスレンダリングの使用が意図したものであるかを確認してください。"
+
+msgid "MeshInfo2:warning:lineStrip"
+msgstr "{0}コンポーネントはLineStripが使用されているSubMeshを処理しません。"
+
+#endregion
+
+# region ErrorReporter
+
+msgid "ErrorReporter:error.internal_error"
+msgstr "内部エラーが発生しました: {0} 以下の処理中です:"
+
+msgid "ErrorReporter:autoFix"
+msgstr "修正する"
+
+# endregion
+
+# region AssetDescription
+
+msgid "AssetDescription:Description"
+msgstr ""
+"Avatar Optimizer Asset Descriptionは、あなたのアセットについての情報をAvatar Optimizerに与えるためのアセットです。\n"
+"詳しくはドキュメントを参照してください。"
+
+msgid "AssetDescription:OpenDocs"
+msgstr "Open Documentation"
+
+# endregion
+
+# region ContextMenus
+
+msgid "ContextMenus:AddTraceAndOptimize:FailedToAddTraceAndOptimize:Title"
+msgstr "Trace and Optimizeの追加に失敗しました"
+
+msgid "ContextMenus:AddTraceAndOptimize:FailedToAddTraceAndOptimize:Message"
+msgstr "Trace and Optimizeはアバターのルートにのみ追加することができます。アバターのルートを選択してもう一度お試しください。"
+
+# endregion

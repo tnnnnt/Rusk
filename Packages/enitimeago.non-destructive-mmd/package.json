@@ -1,0 +1,20 @@
+{
+  "name": "enitimeago.non-destructive-mmd",
+  "displayName": "Make It MMD",
+  "version": "1.2.0",
+  "unity": "2022.3",
+  "description": "Non-destructive MMD blend shape creator",
+  "vrchatVersion": "2022.1.1",
+  "author": {
+    "name": "eni",
+    "email": "129673786+enitimeago@users.noreply.github.com",
+    "url": "https://github.com/enitimeago"
+  },
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "2.0.2"
+  },
+  "vpmDependencies": {
+    "com.vrchat.avatars": ">=3.7.0",
+    "nadena.dev.ndmf": ">=1.5.0 <2.0.0-a"
+  }
+}

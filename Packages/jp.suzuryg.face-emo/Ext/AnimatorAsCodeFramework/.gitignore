@@ -1,0 +1,4 @@
+*.cs
+*.meta
+LICENSE
+!*.asmdef.meta

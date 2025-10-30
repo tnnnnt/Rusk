@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Purple_props hat
+  m_Shader: {fileID: 4800000, guid: efa77a80ca0344749b4f19fdd5891cbe, type: 3}
+  m_Parent: {fileID: 2100000, guid: 9f342eeaccfba7e48a01fea46c992e93, type: 2}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AlphaMask:
+        m_Texture: {fileID: 2800000, guid: 3ec6245226212894c99d90a8fd6b1a56, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BaseColorMap:
+        m_Texture: {fileID: 2800000, guid: 68acc0f7718a8ce498e313f37f779321, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: 68acc0f7718a8ce498e313f37f779321, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Emission2ndBlendMask:
+        m_Texture: {fileID: 2800000, guid: c47d44ac9b9182c489821c5af726f55a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionBlendMask:
+        m_Texture: {fileID: 2800000, guid: 01efe726201d23242a50cc4e924ecbaf, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Main2ndBlendMask:
+        m_Texture: {fileID: 2800000, guid: 825dcc9b36ef8da4380625420560f854, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 68acc0f7718a8ce498e313f37f779321, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MatCap2ndBlendMask:
+        m_Texture: {fileID: 2800000, guid: 825dcc9b36ef8da4380625420560f854, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MatCap2ndTex:
+        m_Texture: {fileID: 2800000, guid: 7819646fc9e87464d8a1b3af22e42448, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MatCapBlendMask:
+        m_Texture: {fileID: 2800000, guid: 0248490594d44fb41964ef6377dad133, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MatCapTex:
+        m_Texture: {fileID: 2800000, guid: 88ca0a81997844644af5b1187cc3297b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _AlphaMaskMode: 1
+    - _AlphaMaskValue: 0.1
+    - _BumpScale: 3.5
+    - _Cutoff: -0.001
+    - _DstBlend: 10
+    - _GlitterScaleRandomize: 0.249
+    - _GlitterSensitivity: 0.7500001
+    - _MatCapMainStrength: 0.9
+    - _OutlineDstBlend: 10
+    - _OutlineEnableLighting: 1
+    - _OutlineSrcBlend: 5
+    - _OutlineVectorScale: -2.4
+    - _OutlineWidth: 0.049
+    - _RimBorder: 0.79
+    - _RimShadowMask: 0.379
+    - _UseEmission: 1
+    - _UseEmission2nd: 1
+    - _UseGlitter: 1
+    - _UseMatCap2nd: 1
+    m_Colors:
+    - _Color2nd: {r: 1, g: 1, b: 1, a: 0.481}
+    - _Emission2ndBlink: {r: 1, g: 0, b: 1.5707964, a: 0}
+    - _Emission2ndColor: {r: 0.26842976, g: 0, b: 1, a: 1}
+    - _EmissionBlink: {r: 1, g: 0, b: 1.5707964, a: 0}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 0.728}
+    - _GlitterColor: {r: 1, g: 1, b: 1, a: 0.229}
+    - _GlitterParams1: {r: 2560, g: 2560, b: 0.3969, a: 152.41579}
+    - _MatCapColor: {r: 1, g: 1, b: 1, a: 0.065}
+    - _OutlineColor: {r: 0.1764706, g: 0.15294118, b: 0.24705882, a: 1}
+    - _OutlineLitColor: {r: 0.7987421, g: 0.7987421, b: 0.7987421, a: 0.049}
+    - _RimColor: {r: 1, g: 1, b: 1, a: 0.035}
+  m_BuildTextureStacks: []

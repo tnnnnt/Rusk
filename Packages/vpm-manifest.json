@@ -65,7 +65,7 @@
       "dependencies": {}
     },
     "cn.org.vrcd.vpm.vrchat-sdk-patcher": {
-      "version": "0.6.3",
+      "version": "0.6.7",
       "dependencies": {
         "com.vrchat.base": "^3.5.0"
       }
@@ -105,9 +105,9 @@
       }
     },
     "cn.org.vrcd.vpm.vrchat-sdk-patcher.avatars": {
-      "version": "0.6.3",
+      "version": "0.6.7",
       "dependencies": {
-        "cn.org.vrcd.vpm.vrchat-sdk-patcher": "0.6.3",
+        "cn.org.vrcd.vpm.vrchat-sdk-patcher": "0.6.7",
         "com.vrchat.avatars": "^3.5.0"
       }
     },

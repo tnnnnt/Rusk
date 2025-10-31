@@ -14,18 +14,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEmpty: 0
   parameters:
-  - name: VRCEmote
-    valueType: 0
+  - name: "\u5BA0\u7269"
+    valueType: 2
     saved: 1
     defaultValue: 0
     networkSynced: 1
-  - name: VRCFaceBlendH
-    valueType: 1
+  - name: "\u7B26\u5492"
+    valueType: 2
     saved: 1
     defaultValue: 0
     networkSynced: 1
-  - name: VRCFaceBlendV
-    valueType: 1
+  - name: "\u957F\u53D1"
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: "\u8033\u6735"
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: "\u5C3E\u5DF4"
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: "\u773C\u955C"
+    valueType: 2
     saved: 1
     defaultValue: 0
     networkSynced: 1

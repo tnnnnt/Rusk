@@ -95,6 +95,18 @@ namespace Suzuryg.FaceEmo.Detail.AV3.Importers
                 }
             }
 
+            // check whether pet contact
+            var contactReceivers = paramToContacts.SelectMany(x => x.Value).Distinct().ToArray();
+            foreach (var item in contactReceivers)
+            {
+                if (item != null && item.rootTransform != null &&
+                    item.rootTransform.name == "Head" && item.collisionTags.Contains("Hand") &&
+                    !validContacts.Contains(item))
+                {
+                    validContacts.Add(item);
+                }
+            }
+
             foreach (var item in validContacts)
             {
                 if (!_av3Setting.ContactReceivers.Contains(item))
@@ -104,6 +116,11 @@ namespace Suzuryg.FaceEmo.Detail.AV3.Importers
             }
 
             return validContacts;
+        }
+
+        public void Clear()
+        {
+            _av3Setting.ContactReceivers.Clear();
         }
 
         private List<string> GetUsedContactParams(AnimatorStateMachine stateMachine, IEnumerable<string> contactParams)

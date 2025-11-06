@@ -506,7 +506,8 @@ namespace Suzuryg.FaceEmo.Detail.View
                     }
                     catch (Exception ex)
                     {
-                        EditorUtility.DisplayDialog(DomainConstants.SystemName, _localizationTable.ErrorHandler_Message_ErrorOccured + "\n\n" + ex?.Message, "OK");
+                        ReadableErrorWindow.Open(DomainConstants.SystemName,
+                            _localizationTable.ErrorHandler_Message_ErrorOccured, ex.ToString());
                         Debug.LogException(ex);
                     }
                 }
@@ -571,7 +572,8 @@ namespace Suzuryg.FaceEmo.Detail.View
                     }
                     catch (Exception ex)
                     {
-                        EditorUtility.DisplayDialog(DomainConstants.SystemName, _localizationTable.ErrorHandler_Message_ErrorOccured + "\n\n" + ex?.Message, "OK");
+                        ReadableErrorWindow.Open(DomainConstants.SystemName,
+                            _localizationTable.ErrorHandler_Message_ErrorOccured, ex.ToString());
                         Debug.LogException(ex);
                     }
                 }
@@ -602,8 +604,9 @@ namespace Suzuryg.FaceEmo.Detail.View
                         }
                         catch (Exception ex)
                         {
-                            EditorUtility.DisplayDialog(DomainConstants.SystemName, _localizationTable.InspectorView_Message_RestoreError + "\n\n" + ex?.Message, "OK");
-                            Debug.LogError(_localizationTable.InspectorView_Message_RestoreError + ex?.ToString());
+                            ReadableErrorWindow.Open(DomainConstants.SystemName,
+                                _localizationTable.InspectorView_Message_RestoreError, ex.ToString());
+                            Debug.LogError(_localizationTable.InspectorView_Message_RestoreError + ex);
                         }
                     }
                 }
@@ -1032,15 +1035,23 @@ namespace Suzuryg.FaceEmo.Detail.View
             Rect textureRect = GUILayoutUtility.GetRect(textureWidth, textureHeight, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(false));
             var width = _thumbnailSetting.FindProperty(nameof(ThumbnailSetting.Inspector_Width));
             var height = _thumbnailSetting.FindProperty(nameof(ThumbnailSetting.Inspector_Height));
+
+            var thumbnailAnimation = new Domain.Animation(string.Empty);
+            // TODO: this method can be executed from different instances of the inspectors of different sizes
             if (width.intValue != textureWidth ||
                 height.intValue != textureHeight)
             {
                 width.intValue = textureWidth;
                 height.intValue = textureHeight;
-                _thumbnailDrawer.RequestUpdateAll();
+                
+                var cachedThumbnail = _thumbnailDrawer.GetCachedThumbnailOrNull(thumbnailAnimation);
+                if (cachedThumbnail != null && (cachedThumbnail.width < width.intValue || cachedThumbnail.height < height.intValue))
+                {
+                    _thumbnailDrawer.RequestUpdateAll();
+                }
             }
             _thumbnailDrawer.Update();
-            var texture = _thumbnailDrawer.GetThumbnail(new Domain.Animation(string.Empty));
+            var texture = _thumbnailDrawer.GetThumbnail(thumbnailAnimation);
             GUI.DrawTexture(textureRect, texture);
 
             EditorGUILayout.Space(10);
@@ -1054,6 +1065,7 @@ namespace Suzuryg.FaceEmo.Detail.View
                 _localizationTable.InspectorView_Thumbnail_VerticalPosition,
                 _localizationTable.InspectorView_Thumbnail_HorizontalAngle,
                 _localizationTable.InspectorView_Thumbnail_VerticalAngle,
+                _localizationTable.InspectorView_Thumbnail_AnimationProgress,
             };
             var labelWidth = labelTexts
                 .Select(text => GUI.skin.label.CalcSize(new GUIContent(text)).x)
@@ -1084,6 +1096,10 @@ namespace Suzuryg.FaceEmo.Detail.View
             var vAngle = _thumbnailSetting.FindProperty(nameof(ThumbnailSetting.Main_CameraAngleV));
             Field_Slider(_localizationTable.InspectorView_Thumbnail_VerticalAngle, vAngle.floatValue, ThumbnailSetting.MaxCameraAngleV * -1, ThumbnailSetting.MaxCameraAngleV,
                 value => { vAngle.floatValue = value; _thumbnailDrawer.RequestUpdateAll(); }, labelWidth);
+
+            var animProgress = _thumbnailSetting.FindProperty(nameof(ThumbnailSetting.Main_AnimationProgress));
+            Field_Slider(_localizationTable.InspectorView_Thumbnail_AnimationProgress, animProgress.floatValue, ThumbnailSetting.MinAnimationProgress, ThumbnailSetting.MaxAnimationProgress,
+                value => { animProgress.floatValue = value; _thumbnailDrawer.RequestUpdateAll(); }, labelWidth);
 
             EditorGUILayout.Space(10);
 
@@ -1213,7 +1229,15 @@ namespace Suzuryg.FaceEmo.Detail.View
             EditorGUILayout.PropertyField(_av3Setting.FindProperty(nameof(AV3Setting.TransitionDurationSeconds)), label);
             EditorGUIUtility.labelWidth = oldLabelWidth;
 
-            TogglePropertyField(_av3Setting.FindProperty(nameof(AV3Setting.AddConfig_EmoteSelect)), _localizationTable.InspectorView_EmoteSelect, tooltip: _localizationTable.InspectorView_Tooltip_Application_EmoteSelect);
+            var emoteSelect = _av3Setting.FindProperty(nameof(AV3Setting.AddConfig_EmoteSelect));
+            TogglePropertyField(emoteSelect, _localizationTable.InspectorView_EmoteSelect,
+                tooltip: _localizationTable.InspectorView_Tooltip_Application_EmoteSelect);
+            using (new EditorGUI.DisabledScope(!emoteSelect.boolValue))
+                TogglePropertyField(_av3Setting.FindProperty(nameof(AV3Setting.EmoteSelect_UseFolderInsteadOfPager)),
+                    _localizationTable.InspectorView_EmoteSelect_UseFolderInsteadOfPager,
+                    tooltip: _localizationTable.InspectorView_Tooltip_Application_EmoteSelect_UseFolderInsteadOfPager,
+                    space: ToggleWidth);
+
             TogglePropertyField(_av3Setting.FindProperty(nameof(AV3Setting.GenerateExMenuThumbnails)), _localizationTable.InspectorView_GenerateModeThumbnails);
             using (new EditorGUI.DisabledScope(!_av3Setting.FindProperty(nameof(AV3Setting.GenerateExMenuThumbnails)).boolValue))
             using (new EditorGUILayout.HorizontalScope())
@@ -1263,8 +1287,12 @@ namespace Suzuryg.FaceEmo.Detail.View
             ToggleEditorPrefsField(DetailConstants.KeyBranchDeleteConfirmation, DetailConstants.DefaultBranchDeleteConfirmation, _localizationTable.InspectorView_BranchDeleteConfirmation);
             ToggleEditorPrefsField(DetailConstants.KeyEditPrefabsConfirmation, DetailConstants.DefaultEditPrefabsConfirmation, _localizationTable.InspectorView_EditPrefabConfirmation);
             ToggleEditorPrefsField(DetailConstants.KeyPrefixDisableConfirmation, DetailConstants.DefaultPrefixDisableConfirmation, _localizationTable.InspectorView_DisablePrefixConfirmation);
-            ToggleEditorPrefsField(DetailConstants.Key_ExpressionEditor_ShowBlinkBlendShapes, DetailConstants.Default_ExpressionEditor_ShowBlinkBlendShapes, _localizationTable.InspectorView_ShowBlinkBlendShapes);
-            ToggleEditorPrefsField(DetailConstants.Key_ExpressionEditor_ShowLipSyncBlendShapes, DetailConstants.Default_ExpressionEditor_ShowLipSyncBlendShapes, _localizationTable.InspectorView_ShowLipSyncBlendShapes);
+            ToggleEditorPrefsField(EditorPrefsStore.ExpressionEditorSettings.ShowBlinkBlendShapes,
+                x => EditorPrefsStore.ExpressionEditorSettings.ShowBlinkBlendShapes = x,
+                _localizationTable.InspectorView_ShowBlinkBlendShapes);
+            ToggleEditorPrefsField(EditorPrefsStore.ExpressionEditorSettings.ShowLipSyncBlendShapes,
+                x => EditorPrefsStore.ExpressionEditorSettings.ShowLipSyncBlendShapes = x,
+                _localizationTable.InspectorView_ShowLipSyncBlendShapes);
 
             using (new EditorGUILayout.HorizontalScope())
             {
@@ -1278,10 +1306,11 @@ namespace Suzuryg.FaceEmo.Detail.View
             }
         }
 
-        private static void TogglePropertyField(SerializedProperty serializedProperty, string label, string tooltip = null)
+        private static void TogglePropertyField(SerializedProperty serializedProperty, string label, string tooltip = null, float space = 0)
         {
             using (new EditorGUILayout.HorizontalScope())
             {
+                if (space > 0) EditorGUILayout.LabelField(string.Empty, GUILayout.Width(space));
                 var value = EditorGUILayout.Toggle(string.Empty, serializedProperty.boolValue, GUILayout.Width(ToggleWidth));
                 if (value != serializedProperty.boolValue)
                 {
@@ -1300,6 +1329,19 @@ namespace Suzuryg.FaceEmo.Detail.View
                 if (newValue != oldValue)
                 {
                     EditorPrefs.SetBool(key, newValue);
+                }
+                GUILayout.Label(label);
+            }
+        }
+
+        private static void ToggleEditorPrefsField(bool current, Action<bool> setAction, string label)
+        {
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                var newValue = EditorGUILayout.Toggle(string.Empty, current, GUILayout.Width(ToggleWidth));
+                if (newValue != current)
+                {
+                    setAction(newValue);
                 }
                 GUILayout.Label(label);
             }

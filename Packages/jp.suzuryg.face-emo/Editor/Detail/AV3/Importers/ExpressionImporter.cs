@@ -29,6 +29,8 @@ namespace Suzuryg.FaceEmo.Detail.AV3.Importers
         private HashSet<string> _contactReceiversParamsInFx = new HashSet<string>();
         private HashSet<string> _physBoneParamsInFx = new HashSet<string>();
 
+        private readonly Dictionary<Motion, Domain.Animation> _duplicatedAnimations = new();
+
         public ExpressionImporter(Domain.Menu menu, AV3Setting av3Setting, string assetDir, IReadOnlyLocalizationSetting localizationSetting)
         {
             _menu = menu;
@@ -138,17 +140,52 @@ namespace Suzuryg.FaceEmo.Detail.AV3.Importers
                 }
             }
 
+            DivideMode(modeId, 2);
+
             var importedPatterns = new List<IMode>();
-            var mode = _menu.GetMode(modeId);
-            if (mode.Branches.Any())
+            var idsToRemove = new List<string>();
+            foreach (var id in _menu.Registered.Order)
             {
-                importedPatterns.Add(mode);
+                if (!_menu.ContainsMode(id)) continue;
+                var mode = _menu.GetMode(id);
+                if (mode.Branches.Any()) importedPatterns.Add(mode);
+                else idsToRemove.Add(id);
             }
-            else
-            {
-                _menu.RemoveMenuItem(modeId);
-            }
+            foreach (var id in idsToRemove) _menu.RemoveMenuItem(id);
+
             return importedPatterns;
+
+            void DivideMode(string prevModeId, int count)
+            {
+                if (count > DomainConstants.MenuItemNums || !_menu.CanAddMenuItemTo(Domain.Menu.RegisteredId)) return;
+
+                var currentModeId = _menu.AddMode(Domain.Menu.RegisteredId);
+                _menu.ModifyModeProperties(currentModeId,
+                    displayName: _localizationSetting.Table.ExpressionImporter_ExpressionPattern + count);
+                var branches = _menu.GetMode(prevModeId).Branches.ToArray();
+                var indicesToRemove = new List<int>();
+                for(var i = 0; i < branches.Length; i++)
+                {
+                    var branch = branches[i];
+                    if (branch.Conditions.Any() && !branch.IsReachable)
+                    {
+                        AddBranch(currentModeId, branch);
+                        indicesToRemove.Add(i);
+                    }
+                }
+
+                if (!indicesToRemove.Any())
+                {
+                    _menu.RemoveMenuItem(currentModeId);
+                    return;
+                }
+
+                indicesToRemove.Reverse();
+                foreach (var index in indicesToRemove) _menu.RemoveBranch(prevModeId, index);
+
+                if (_menu.GetMode(currentModeId).Branches.Any(x => x.Conditions.Any() && !x.IsReachable))
+                    DivideMode(currentModeId, count + 1);
+            }
         }
 
         private List<IBranch> GetBranches(AnimatorStateMachine stateMachine)
@@ -219,6 +256,12 @@ namespace Suzuryg.FaceEmo.Detail.AV3.Importers
                     branch.AddCondition(new Condition(hand, handGesture, comparisonOperator));
                 }
 
+                // avoid filling neutral row or col
+                if (branch.Conditions.Count == 1 && branch.Conditions.First() == new Condition(Hand.Left, HandGesture.Neutral, ComparisonOperator.Equals))
+                    branch.AddCondition(new Condition(Hand.Right, HandGesture.Neutral, ComparisonOperator.Equals));
+                else if (branch.Conditions.Count == 1 && branch.Conditions.First() == new Condition(Hand.Right, HandGesture.Neutral, ComparisonOperator.Equals))
+                    branch.AddCondition(new Condition(Hand.Left, HandGesture.Neutral, ComparisonOperator.Equals));
+
                 if (!branch.Conditions.Any())
                 {
                     // exclude face toggles
@@ -269,7 +312,7 @@ namespace Suzuryg.FaceEmo.Detail.AV3.Importers
                 }
                 else
                 {
-                    branch.SetAnimation(GetLastFrame(transition.destinationState.motion), BranchAnimationType.Base);
+                    branch.SetAnimation(GetFaceAnimation(transition.destinationState.motion), BranchAnimationType.Base);
                 }
 
                 if (branch.BaseAnimation is Domain.Animation ||
@@ -403,6 +446,49 @@ namespace Suzuryg.FaceEmo.Detail.AV3.Importers
             AssetDatabase.CreateAsset(clip, _assetDir + "/" + AnimationElement.GetNewAnimationName(_assetDir, name));
         }
 
+        private Domain.Animation GetFaceAnimation(Motion motion)
+        {
+            if (motion == null) return null;
+
+            if (_duplicatedAnimations.TryGetValue(motion, out var existing)) return existing;
+
+            if (motion is BlendTree sourceTree && sourceTree.children.Length > 0)
+                return GetFaceAnimation(sourceTree.children.Last().motion);
+
+            if (motion is not AnimationClip sourceClip) return null;
+
+            var duplicatedClip = Object.Instantiate(sourceClip);
+            var faceDifferenceExists = false;
+
+            foreach (var binding in AnimationUtility.GetCurveBindings(sourceClip))
+            {
+                var curve = AnimationUtility.GetEditorCurve(sourceClip, binding);
+                if (curve == null || curve.keys.Length <= 0)
+                {
+                    AnimationUtility.SetEditorCurve(duplicatedClip, binding, null);
+                    continue;
+                }
+
+                var blendShape =
+                    new BlendShape(binding.path, binding.propertyName.Replace("blendShape.", string.Empty));
+                if (!_faceBlendShapesValues.TryGetValue(blendShape, out var faceValue) ||
+                    curve.keys.All(x => Mathf.Approximately(x.value, faceValue)))
+                {
+                    AnimationUtility.SetEditorCurve(duplicatedClip, binding, null);
+                    continue;
+                }
+
+                faceDifferenceExists = true;
+            }
+            if (!faceDifferenceExists) return null;
+
+            SaveClip(duplicatedClip, string.IsNullOrEmpty(motion.name) ? "NoName" : motion.name);
+            var wrapped =
+                new Domain.Animation(AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(duplicatedClip)));
+            _duplicatedAnimations[motion] = wrapped;
+            return wrapped;
+        }
+
         private void AddBranch(string modeId, IBranch branch)
         {
             _menu.AddBranch(modeId, conditions: branch.Conditions);
@@ -511,7 +597,7 @@ namespace Suzuryg.FaceEmo.Detail.AV3.Importers
                     }
                     else
                     {
-                        branch.SetAnimation(GetLastFrame(item.transition.destinationState.motion), BranchAnimationType.Base);
+                        branch.SetAnimation(GetFaceAnimation(item.transition.destinationState.motion), BranchAnimationType.Base);
                     }
 
                     mode.Add(branch);
@@ -624,6 +710,8 @@ namespace Suzuryg.FaceEmo.Detail.AV3.Importers
             {
                 (@"\bmouth\s*morph\s*canceller\b", @"^enable$"),
                 (@"^lipsync\s*override$", @"^lipsyncing$"),
+                (@"^lipSynk$", @"^mouse0$"),
+                (@"^lipSync\s*control$", @"^lipsyncon.*$"),
             };
 
             foreach (var pattern in patterns)

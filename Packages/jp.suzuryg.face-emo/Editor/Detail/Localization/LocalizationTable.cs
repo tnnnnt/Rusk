@@ -18,6 +18,8 @@ namespace Suzuryg.FaceEmo.Detail.Localization
         public string Common_Enabled = "Enabled";
         public string Common_Disabled = "Disabled";
         public string Common_Colon = ": ";
+        public string Common_Enable = "Enable";
+        public string Common_DontEnable = "Don’t enable";
 
         public string Common_Neutral = "Neutral";
         public string Common_Fist = "Fist";
@@ -78,6 +80,7 @@ namespace Suzuryg.FaceEmo.Detail.Localization
         public string HierarchyView_Tooltip_Delete = "Delete the selected expression pattern or folder.";
 
         public string MenuItemListView_Title = "Expression Patterns";
+        public string MenuItemListView_TreeViewToggle = "Show Tree View";
         public string MenuItemListView_ChangeDefaultFace = "Change Default Face";
         public string MenuItemListView_UseAnimationNameAsDisplayName = "Use ClipName As PatternName";
         public string MenuItemListView_Tooltip_AddMode = "Create a new expression pattern in the current hierarchy.";
@@ -94,7 +97,7 @@ namespace Suzuryg.FaceEmo.Detail.Localization
         public string MenuItemListView_Blink = "Enable Blink";
         public string MenuItemListView_MouthMorphCanceler = "Mouth Morph Canceler";
         public string MenuItemListView_Empty = "You can add an expression pattern by pressing the button\nat the top of the view.";
-        public string MenuItemListView_SelectFolder = "Please select a folder on the left panel.";
+        public string MenuItemListView_SelectFolder = "Please select a folder from the tree view.";
 
         public string BranchListView_Title = "Expressions";
         public string BranchListView_Simplify = "Simplify";
@@ -240,6 +243,7 @@ namespace Suzuryg.FaceEmo.Detail.Localization
         public string InspectorView_Thumbnail_VerticalPosition = "Position (Vertical)";
         public string InspectorView_Thumbnail_HorizontalAngle = "Angle (Horizontal)";
         public string InspectorView_Thumbnail_VerticalAngle = "Angle (Vertical)";
+        public string InspectorView_Thumbnail_AnimationProgress = "Animation Progress";
         public string InspectorView_Thumbnail_Reset = "Reset";
 
         public string InspectorView_Dance = "Dance Gimmick Settings";
@@ -269,6 +273,7 @@ namespace Suzuryg.FaceEmo.Detail.Localization
 
         public string InspectorView_AvatarApplicationSetting = "Avatar Application Settings";
         public string InspectorView_EmoteSelect = "Generate Emote Select Menu";
+        public string InspectorView_EmoteSelect_UseFolderInsteadOfPager = "Automatically Create Folders When More Than 8 Expressions";
         public string InspectorView_SmoothAnalogFist = "Smooth Analog Fist";
         public string InspectorView_TransitionDuration = "Transition Duration (sec)";
         public string InspectorView_AddExpressionParameterPrefix = "Add Expression Parameter Prefix (FaceEmo_)";
@@ -327,6 +332,7 @@ namespace Suzuryg.FaceEmo.Detail.Localization
         public string InspectorView_Tooltip_ExMenu_Controller_Index = "Disable expression changes by the 'Fist' gesture (treated as Neutral).";
         public string InspectorView_Tooltip_Application = "You can change the settings when applying the expression menu to the avatar.";
         public string InspectorView_Tooltip_Application_EmoteSelect = "If disabled, the number of expression patterns that can be registered in the Expression Menu is increased by one.";
+        public string InspectorView_Tooltip_Application_EmoteSelect_UseFolderInsteadOfPager = "Automatically creates folders and splits expressions when there are more than 8. When disabled, VRChat automatically divides the menu into pages and uses a “More” button for page navigation.";
         public string InspectorView_Tooltip_Defaults = "You can change the settings values right after creating expression patterns or expressions.";
         public string InspectorView_Tooltip_Editor = "You can configure the behavior of this tool's UI. These settings are shared across all projects.";
         public string InspectorView_Hints_ExcludedBlendShapes = "You can specify blend shapes that are not controlled by FaceEmo. " +
@@ -386,9 +392,13 @@ namespace Suzuryg.FaceEmo.Detail.Localization
             "For example, facial expressions of the left and right hands are not automatically synthesized, so the post-composite facial expressions must be created in the gesture table.";
         public string ExpressionImporter_Message_OptionalSettingsImported = "The following optional settings were imported from the avatar.";
         public string ExpressionImporter_Message_NoOptionalSettings = "No importable optional settings were found.";
+        public string ExpressionImporter_Message_EnableCotactGimmicks =
+            "Detected contact gimmicks on the avatar. Would you like to enable it?\nIf you want to disable it later, open \"Optional Settings\" -> \"Contact Settings\", and press the \"–\" button to clear the value.";
         public string ExpressionImporter_Info_ChangeOptionalSettings = "If you want to change the optional settings, select the following object in the hierarchy and change the settings from the inspector.";
 
         public string ErrorHandler_Message_ErrorOccured = "An error has occurred. Please see the console for more details.";
+        public string ErrorHandler_Message_CompileErrorExists =
+            "FaceEmo isn’t working properly because there are errors in your project. Please press Clear in the Console tab and fix any remaining errors.";
 
         public string ExMenu_EmoteSelect = "Emote Select";
         public string ExMenu_Setting = "Settings";

@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1101 &-9165426985926303523
 AnimatorStateTransition:
@@ -5178,27 +5178,27 @@ AnimatorStateMachine:
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions:
+  - first: {fileID: -2370540089108679474}
+    second:
+    - {fileID: 4427468399848948492}
+  - first: {fileID: 9093355675568721667}
+    second:
+    - {fileID: -2278898447250998319}
+  - first: {fileID: -1825693951379221438}
+    second:
+    - {fileID: -3243691613788510932}
   - first: {fileID: -7002822865755349501}
     second:
     - {fileID: -3945595556508299212}
   - first: {fileID: -4269714022654291784}
     second:
     - {fileID: 4467903053158760642}
-  - first: {fileID: -2370540089108679474}
-    second:
-    - {fileID: 4427468399848948492}
-  - first: {fileID: -1825693951379221438}
-    second:
-    - {fileID: -3243691613788510932}
   - first: {fileID: 2243304792390669116}
     second:
     - {fileID: 4105730889241500420}
   - first: {fileID: 2845981768659460574}
     second:
     - {fileID: 8423253879370306277}
-  - first: {fileID: 9093355675568721667}
-    second:
-    - {fileID: -2278898447250998319}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 20, y: 80, z: 0}
   m_EntryPosition: {x: 20, y: 130, z: 0}
@@ -6110,12 +6110,12 @@ AnimatorStateMachine:
   - {fileID: -5061286364024669450}
   - {fileID: 8422476407989866397}
   m_StateMachineTransitions:
-  - first: {fileID: -3564322946563231686}
-    second:
-    - {fileID: 45996868880359724}
   - first: {fileID: 5461504891024525594}
     second:
     - {fileID: -5349816524659444034}
+  - first: {fileID: -3564322946563231686}
+    second:
+    - {fileID: 45996868880359724}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 220, y: -20, z: 0}
   m_EntryPosition: {x: 220, y: 30, z: 0}
@@ -6579,18 +6579,18 @@ AnimatorStateMachine:
   - {fileID: -8300999967445026895}
   - {fileID: -6874060494892614633}
   m_StateMachineTransitions:
-  - first: {fileID: -2994142612866158692}
-    second:
-    - {fileID: 3507392410436712411}
-  - first: {fileID: 3115160531071165150}
-    second:
-    - {fileID: -3358700174034536003}
   - first: {fileID: 4455708218986183784}
     second:
     - {fileID: 4240369483208314231}
+  - first: {fileID: -2994142612866158692}
+    second:
+    - {fileID: 3507392410436712411}
   - first: {fileID: 7496289664109633131}
     second:
     - {fileID: 2202218292273849212}
+  - first: {fileID: 3115160531071165150}
+    second:
+    - {fileID: -3358700174034536003}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 20, y: 50, z: 0}
   m_EntryPosition: {x: 20, y: 100, z: 0}
@@ -7789,55 +7789,55 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Seated
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: InStation
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: VRCEmote
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Dummy
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: CN_IS_ACTION_ACTIVE
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: SYNC_CN_TRACKING_RECOVERY_ENABLE
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: SYNC_CN_AFK_LOCOMOTION_ENABLE
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: SYNC_CN_DANCE_GIMMICK_ENABLE
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -15554,12 +15554,12 @@ AnimatorStateMachine:
   - {fileID: -2564341854274334271}
   - {fileID: 2338670133460227823}
   m_StateMachineTransitions:
-  - first: {fileID: -8815651336257961480}
-    second:
-    - {fileID: -8832931094723422544}
   - first: {fileID: -1978171914219537930}
     second:
     - {fileID: 5371827581770594562}
+  - first: {fileID: -8815651336257961480}
+    second:
+    - {fileID: -8832931094723422544}
   - first: {fileID: 693587687655864880}
     second:
     - {fileID: 8602960250489085288}

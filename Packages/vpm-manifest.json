@@ -61,7 +61,7 @@
       }
     },
     "jp.suzuryg.face-emo": {
-      "version": "1.5.5",
+      "version": "1.6.3",
       "dependencies": {}
     },
     "cn.org.vrcd.vpm.vrchat-sdk-patcher": {
@@ -75,10 +75,10 @@
       "dependencies": {}
     },
     "enitimeago.non-destructive-mmd": {
-      "version": "1.2.0",
+      "version": "1.2.1",
       "dependencies": {
         "com.vrchat.avatars": ">=3.7.0",
-        "nadena.dev.ndmf": ">=1.5.0 <2.0.0-a"
+        "nadena.dev.ndmf": ">=1.7.4 <2.0.0-a"
       }
     },
     "vrchat.blackstartx.gesture-manager": {
@@ -122,7 +122,7 @@
       }
     },
     "com.vrcfury.vrcfury": {
-      "version": "1.1258.0",
+      "version": "1.1267.0",
       "dependencies": {}
     },
     "nadena.dev.modular-avatar": {

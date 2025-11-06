@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Suzuryg.FaceEmo.Detail.ExpressionEditor;
 using UnityEngine;
 using UnityEditor;
 using UniRx;
@@ -16,7 +17,7 @@ namespace Suzuryg.FaceEmo.Detail.View.Element
 {
     public class AnimationElement : IDisposable
     {
-        private AV3.ExpressionEditor _expressionEditor;
+        private IExpressionEditor _expressionEditor;
         private AV3Setting _aV3Setting;
         private ThumbnailSetting _thumbnailSetting;
         private SerializedObject _aV3Object;
@@ -31,7 +32,7 @@ namespace Suzuryg.FaceEmo.Detail.View.Element
         private CompositeDisposable _disposables = new CompositeDisposable();
 
         public AnimationElement(
-            AV3.ExpressionEditor expressionEditor,
+            IExpressionEditor expressionEditor,
             IReadOnlyLocalizationSetting localizationSetting,
             AV3Setting aV3Setting,
             ThumbnailSetting thumbnailSetting)
@@ -81,8 +82,8 @@ namespace Suzuryg.FaceEmo.Detail.View.Element
             bool canCombine = true, Domain.Animation leftCombine = null, Domain.Animation rightCombine = null)
         {
             // Thumbnail
-            var thumbnailWidth = _thumbnailSetting.Main_Width;
-            var thumbnailHeight = _thumbnailSetting.Main_Height;
+            var thumbnailWidth = EditorPrefsStore.MainViewThumbnailWidthInMemory;
+            var thumbnailHeight = EditorPrefsStore.MainViewThumbnailHeightInMemory;
 
             Rect thumbnailRect = new Rect(rect.x, rect.y, thumbnailWidth, thumbnailHeight);
             float xCurrent = rect.x;
@@ -194,13 +195,13 @@ namespace Suzuryg.FaceEmo.Detail.View.Element
 
         public float GetWidth()
         {
-            var thumbnailWidth = _thumbnailSetting.Main_Width;
+            var thumbnailWidth = EditorPrefsStore.MainViewThumbnailWidthInMemory;
             return thumbnailWidth;
         }
 
         public float GetHeight()
         {
-            var thumbnailHeight = _thumbnailSetting.Main_Height;
+            var thumbnailHeight = EditorPrefsStore.MainViewThumbnailHeightInMemory;
             return thumbnailHeight + EditorGUIUtility.singleLineHeight;
         }
 

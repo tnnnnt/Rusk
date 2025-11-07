@@ -14,16 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEmpty: 0
   parameters:
-  - name: "\u5BA0\u7269"
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: "\u7B26\u5492"
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
   - name: "\u957F\u53D1"
     valueType: 2
     saved: 1
@@ -39,7 +29,7 @@ MonoBehaviour:
     saved: 1
     defaultValue: 0
     networkSynced: 1
-  - name: "\u773C\u955C"
+  - name: "\u7AF9\u8282\u866B"
     valueType: 2
     saved: 1
     defaultValue: 0

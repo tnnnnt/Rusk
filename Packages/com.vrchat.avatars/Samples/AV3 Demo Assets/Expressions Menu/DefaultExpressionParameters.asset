@@ -12,25 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: -1506855854, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
   m_Name: DefaultExpressionParameters
   m_EditorClassIdentifier: 
-  isEmpty: 0
-  parameters:
-  - name: "\u957F\u53D1"
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: "\u8033\u6735"
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: "\u5C3E\u5DF4"
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: "\u7AF9\u8282\u866B"
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
+  isEmpty: 1
+  parameters: []

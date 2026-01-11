@@ -166,7 +166,7 @@ namespace VRCSDK2
 
         protected void OnSDKPipelineComplete(string contentUrl=null)
         {
-            VRC.Core.Logger.Log("OnSDKPipelineComplete");
+            VRC.Core.Logger.Log("OnSDKPipelineComplete", API.LOG_CATEGORY);
             isUploading = false;
             pipelineManager.completedSDKPipeline = true;
             ClearUploadRetryState();
@@ -179,7 +179,7 @@ namespace VRCSDK2
 
         protected void OnSDKPipelineError(string error, string details)
         {
-            VRC.Core.Logger.Log("OnSDKPipelineError: " + error + " - " + details);
+            VRC.Core.Logger.Log("OnSDKPipelineError: " + error + " - " + details, API.LOG_CATEGORY);
             isUploading = false;
             pipelineManager.completedSDKPipeline = true;
             UnityEditor.EditorApplication.isPaused = false;
@@ -232,7 +232,7 @@ namespace VRCSDK2
         {
             if (string.IsNullOrEmpty(filename))
                 yield break;
-            VRC.Core.Logger.Log("Uploading " + fileType + "(" + filename + ") ...");
+            VRC.Core.Logger.Log("Uploading " + fileType + "(" + filename + ") ...", API.LOG_CATEGORY);
             SetUploadProgress("Uploading " + fileType + "...", "", 0.0f);
 
             string fileId = GetUploadRetryStateValue(filename);

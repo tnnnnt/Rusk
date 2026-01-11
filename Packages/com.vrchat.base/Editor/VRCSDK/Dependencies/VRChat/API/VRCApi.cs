@@ -18,9 +18,6 @@ using VRC.Core;
 
 [assembly: InternalsVisibleTo("VRC.SDK3.Editor")]
 [assembly: InternalsVisibleTo("VRC.SDK3A.Editor")]
-#if VRC_ENABLE_PROPS
-[assembly: InternalsVisibleTo("VRC.SDK3P.Editor")]
-#endif
 namespace VRC.SDKBase.Editor.Api {
     [InitializeOnLoad]
     public static class VRCApi
@@ -657,7 +654,33 @@ namespace VRC.SDKBase.Editor.Api {
             await VRCApi.Put<object, VRCAvatar>($"avatars/{id}", bundleUpdateRequest, cancellationToken: cancellationToken);
             Core.Logger.Log("Fetching latest", API.LOG_CATEGORY);
             return await VRCApi.Get<VRCAvatar>($"avatars/{id}", forceRefresh: true, cancellationToken: cancellationToken);
-        } 
+        }
+
+        /// <summary>
+        /// Creates an avatar entry in the database.
+        /// Use this method to get a new ID to assign to the avatar blueprint before building and uploading it.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="onProgress"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [PublicAPI]
+        public static async Task<VRCAvatar> CreateAvatarRecord(VRCAvatar data, Action<string, float> onProgress = null,
+            CancellationToken cancellationToken = default)
+        {
+            var newAvatarData = new Dictionary<string, object>
+            {
+                {"name", data.Name},
+                {"description", data.Description},
+                {"tags", data.Tags},
+                {"releaseStatus", data.ReleaseStatus},
+                {"platform", Tools.Platform},
+                {"unityVersion", Tools.UnityVersion.ToString()},
+                {"assetVersion", 1}
+            };
+            var createdAvatar = await Post<Dictionary<string, object>, VRCAvatar>($"avatars", newAvatarData, cancellationToken: cancellationToken);
+            return createdAvatar;
+        }
         
         [PublicAPI]
         public static async Task<VRCAvatar> CreateNewAvatar(string id, VRCAvatar data, string pathToBundle, string pathToImage,
@@ -668,6 +691,13 @@ namespace VRC.SDKBase.Editor.Api {
                 Core.Logger.LogError("Both bundle and image paths must be provided");
                 return data;
             }
+            
+            var remoteData = await VRCApi.GetAvatar(id, forceRefresh: true, cancellationToken);
+            if (!remoteData.PendingUpload)
+            {
+                throw new UploadException("Avatar creation is only allowed for a reserved avatar ID pending first upload");
+            }
+            
             var fileName = "Avatar - " + data.Name + " - Asset bundle - " + Application.unityVersion + "_" + ApiAvatar.VERSION.ApiVersion +
                            "_" + VRC.Tools.Platform + "_" + API.GetServerEnvironmentForApiUrl();
             var newBundleUrl = await UploadFile(pathToBundle, "", fileName, onProgress: (status, percentage) =>
@@ -693,7 +723,6 @@ namespace VRC.SDKBase.Editor.Api {
             }
             var newAvatarData = new Dictionary<string, object>
             {
-                {"id", id},
                 {"name", data.Name},
                 {"description", data.Description},
                 {"assetUrl", newBundleUrl},
@@ -713,18 +742,14 @@ namespace VRC.SDKBase.Editor.Api {
             {
                 newAvatarData["secondaryStyle"] = data.Styles.Secondary;
             }
-            var createdAvatar = await Post<Dictionary<string, object>, VRCAvatar>($"avatars", newAvatarData, cancellationToken: cancellationToken);
-            var bundleUpdateRequest = new Dictionary<string, object>
-            {
-                {"assetUrl", newBundleUrl},
-                {"platform", Tools.Platform.ToString()},
-                {"unityVersion", Tools.UnityVersion.ToString()},
-                {"assetVersion", 1}
-            };
-            // enforce "standard" bundle
-            createdAvatar = await Put<Dictionary<string, object>, VRCAvatar>($"avatars/{createdAvatar.ID}", bundleUpdateRequest, cancellationToken: cancellationToken);
-            Core.Logger.Log("Created a new Avatar");
+            var createdAvatar = await Put<Dictionary<string, object>, VRCAvatar>($"avatars/{remoteData.ID}", newAvatarData, cancellationToken: cancellationToken);
             return createdAvatar;
+        }
+
+        [PublicAPI]
+        public static async Task<VRCAvatar> DeleteAvatar(string id)
+        {
+            return await VRCApi.Delete<VRCAvatar>($"avatars/{id}", cancellationToken: CancellationToken.None);
         }
 
         [PublicAPI]
@@ -778,181 +803,6 @@ namespace VRC.SDKBase.Editor.Api {
         
         
         
-#if VRC_ENABLE_PROPS
-        [PublicAPI]
-        public static async Task<VRCProp> GetProp(string id, bool forceRefresh = false, CancellationToken cancellationToken = default)
-        {
-            return await Get<VRCProp>($"props/{id}", forceRefresh: forceRefresh, cancellationToken: cancellationToken);
-        }
-        
-        [PublicAPI]
-        public static async Task<List<VRCProp>> GetProps(int n = 100, int offset = 0, bool forceRefresh = false, CancellationToken cancellationToken = default)
-        {
-            return await Get<List<VRCProp>>($"props", queryParams: new Dictionary<string, string>
-            {
-                {"n", n.ToString()},
-                {"offset", offset.ToString()},
-                {"authorId", APIUser.CurrentUser?.id}
-            }, forceRefresh: forceRefresh, cancellationToken: cancellationToken);
-        }
-        
-        [PublicAPI]
-        public static async Task<VRCProp> UpdatePropInfo(string id, VRCProp data, CancellationToken cancellationToken = default)
-        {
-            var changes = new VRCPropChanges
-            {
-                Name = data.Name,
-                Description = data.Description,
-                Tags = data.Tags,
-                SpawnType = data.SpawnType,
-                WorldPlacementMask = data.WorldPlacementMask,
-            };
-            return await Put<VRCPropChanges, VRCProp>($"props/{id}", changes, cancellationToken: cancellationToken);
-        }
-
-        public static async Task<bool> GetCanPublishProp(string id, CancellationToken cancellationToken = default)
-        {
-            return (await Get<JObject>($"props/{id}/publish", cancellationToken: cancellationToken)).Value<bool>(
-                "canPublish");
-        }
-        
-        public static async Task<JObject> PublishProp(string id, CancellationToken cancellationToken = default)
-        {
-            return await Put<JObject>($"props/{id}/publish", cancellationToken: cancellationToken);
-        }
-        
-        public static async Task<JObject> UnpublishProp(string id, CancellationToken cancellationToken = default)
-        {
-            return await Delete<JObject>($"props/{id}/publish", cancellationToken: cancellationToken);
-        }
-        
-        [PublicAPI]
-        public static async Task<VRCProp> UpdatePropImage(string id, VRCProp data, string pathToImage, Action<string, float> onProgress = null, CancellationToken cancellationToken = default)
-        {
-            var fileName = "Prop - " + data.Name + " - Image - " + Application.unityVersion + "_" + ApiWorld.VERSION.ApiVersion +
-                           "_" + VRC.Tools.Platform + "_" + API.GetServerEnvironmentForApiUrl();
-            var fileId = ApiFile.ParseFileIdFromFileAPIUrl(data.ImageUrl);
-            var newImageUrl = await UploadFile(pathToImage, fileId, fileName, onProgress, cancellationToken);
-            if (string.IsNullOrWhiteSpace(newImageUrl))
-            {
-                Debug.Log("new image url is empty, aborting");
-                return data;
-            }
-            var imageUpdateRequest = new Dictionary<string, string>
-            {
-                {"imageUrl", newImageUrl}
-            };
-            return await Put<object, VRCProp>($"props/{id}", imageUpdateRequest, cancellationToken: cancellationToken);
-        }
-        
-        [PublicAPI]
-        public static async Task<VRCProp> UpdatePropBundle(string id, VRCProp data, string pathToBundle, string propSignature,
-            Action<string, float> onProgress = null, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(pathToBundle))
-            {
-                Core.Logger.LogError("Bundle path cannot be empty", API.LOG_CATEGORY);
-                return data;
-            }
-            var fileName = "Prop - " + data.Name + " - Asset bundle - " + Application.unityVersion + "_" + ApiWorld.VERSION.ApiVersion +
-                          "_" + VRC.Tools.Platform + "_" + API.GetServerEnvironmentForApiUrl();
-            
-            string newBundleUrl = null;
-            var currentAssetUrl = data.GetLatestAssetUrlForPlatform(Tools.Platform);
-            
-            // new platform
-            if (string.IsNullOrWhiteSpace(currentAssetUrl))
-            {
-                newBundleUrl = await UploadFile(pathToBundle, "", fileName, onProgress, cancellationToken);
-            }
-            else
-            {
-                var fileId = ApiFile.ParseFileIdFromFileAPIUrl(currentAssetUrl);
-                newBundleUrl = await UploadFile(pathToBundle, fileId, fileName, onProgress, cancellationToken);
-            }
-            if (string.IsNullOrWhiteSpace(newBundleUrl))
-            {
-                Core.Logger.LogError("New bundle url is empty, aborting", API.LOG_CATEGORY);
-                return data;
-            }
-            var bundleUpdateRequest = new Dictionary<string, object>
-            {
-                {"name", data.Name},
-                {"assetUrl", newBundleUrl},
-                {"platform", Tools.Platform.ToString()},
-                {"unityVersion", Tools.UnityVersion.ToString()},
-                {"assetVersion", 1},
-                {"spawnType", data.SpawnType},
-                {"worldPlacementMask", data.WorldPlacementMask},
-            };
-            // only add prop signature if it is not empty
-            if(!string.IsNullOrWhiteSpace(propSignature))
-            {
-                bundleUpdateRequest["propSignature"] = propSignature;
-            }
-            Core.Logger.Log($"Updating with new bundle {newBundleUrl}", API.LOG_CATEGORY);
-            await VRCApi.Put<object, VRCProp>($"props/{id}", bundleUpdateRequest, cancellationToken: cancellationToken);
-            Core.Logger.Log("Fetching latest", API.LOG_CATEGORY);
-            return await VRCApi.Get<VRCProp>($"props/{id}", forceRefresh: true, cancellationToken: cancellationToken);
-        } 
-        
-        [PublicAPI]
-        public static async Task<VRCProp> CreateNewProp(string id, VRCProp data, string pathToBundle, string pathToImage, string propSignature,
-            Action<string, float> onProgress = null, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(pathToBundle) || string.IsNullOrWhiteSpace(pathToImage))
-            {
-                Core.Logger.LogError("Both bundle and image paths must be provided");
-                return data;
-            }
-            var fileName = "Prop - " + data.Name + " - Asset bundle - " + Application.unityVersion + "_" + ApiWorld.VERSION.ApiVersion +
-                           "_" + VRC.Tools.Platform + "_" + API.GetServerEnvironmentForApiUrl();
-            var newBundleUrl = await UploadFile(pathToBundle, "", fileName, onProgress: (status, percentage) =>
-            {
-                onProgress?.Invoke(status, percentage * 0.5f);
-            }, cancellationToken);
-            if (string.IsNullOrWhiteSpace(newBundleUrl))
-            {
-                Core.Logger.LogError("New bundle url is empty, aborting");
-                return data;
-            }
-            var imageFileName = "Prop - " + data.Name + " - Image - " + Application.unityVersion + "_" + ApiWorld.VERSION.ApiVersion +
-                           "_" + VRC.Tools.Platform + "_" + API.GetServerEnvironmentForApiUrl();
-            var newImageUrl = await UploadFile(pathToImage, "", imageFileName, onProgress: (status, percentage) =>
-            {
-                onProgress?.Invoke(status, 0.5f + percentage * 0.5f);
-            }, cancellationToken);
-            if (string.IsNullOrWhiteSpace(newImageUrl))
-            {
-                Core.Logger.LogError("New image url is empty, aborting");
-                return data;
-            }
-            var newPropData = new Dictionary<string, object>
-            {
-                {"id", id},
-                {"name", data.Name},
-                {"description", data.Description},
-                {"assetUrl", newBundleUrl},
-                {"imageUrl", newImageUrl},
-                {"platform", Tools.Platform},
-                {"unityVersion", Tools.UnityVersion.ToString()},
-                {"tags", data.Tags},
-                {"assetVersion", 1},
-                {"spawnType", data.SpawnType},
-                {"worldPlacementMask", data.WorldPlacementMask}
-            };
-            
-            // only add prop signature if it is not empty
-            if(!string.IsNullOrWhiteSpace(propSignature))
-            {
-                newPropData["propSignature"] = propSignature;
-            }
-
-            var createdProp = await Post<Dictionary<string, object>, VRCProp>($"props", newPropData, cancellationToken: cancellationToken);
-            Core.Logger.Log("Created a new Prop");
-            return createdProp;
-        }
-#endif
         #endregion
 
         #region Public Utilities

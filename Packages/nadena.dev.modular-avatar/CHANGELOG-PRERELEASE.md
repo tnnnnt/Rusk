@@ -19,6 +19,83 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Deprecated
 
+## [1.15.1] - [2025-12-06]
+
+### Fixed
+- [#1826] Fixed an issue where `MA Menu Item`s whose parameter is defined in a `MA Parameters` component could end up
+  with a value of zero.
+- [#1828] Fixed an issue where using `MA Scale Adjuster` on a non-humanoid avatar would result in a build error.
+
+## [1.15.0] - [2025-12-03]
+
+### Fixed
+- [#1823] Reaction Debugger may throw `MissingReferenceException`
+
+## [1.15.0-rc.2] - [2025-11-21]
+
+### Fixed
+- [#1818] Fixed compile errors when VRCSDK is not present in the project
+
+## [1.15.0-rc.1] - [2025-11-19]
+
+### Fixed
+- [#1812] `Scale Adjuster` can now adjust the length of humanoid bones
+- [#1813] `Fit Preview` would fail to render physbones when they point to a transform other than themselves in some cases
+- [#1814] Fixed an issue where `Fit Preview` would break after changing target avatar
+- [#1814] Blocked the DEL key in `Fit Preview` windows to avoid accidental object deletion
+
+### Changed
+- [#1815] Modular Avatar will no longer garbage collect unused objects when they are referenced by an animation
+
+## [1.14.4-beta.5] - [2025-11-16]
+
+### Added
+- [#1804] Added support for the `IsAnimatorEnabled` VRChat built-in parameter
+- [#1786] Implement `MA Global Collider`
+
+### Fixed
+- [#1808] Improved performance of preview logic, particularly when there are a very large number of disabled avatars
+
+## [1.14.4-beta.4] - [2025-11-04]
+
+### Added
+- [#1769] Added warning when VRCFury version < 1.1250.0 is present with Mesh Cutter or Shape Changer delete mode components, as these combinations are incompatible.
+
+### Fixed
+- [#1799] `Convert Constraints` would fail to fix animations if a constraint was replaced by `Replace Object`
+
+- [#1778] `Vertex Filter - By Axis` would leave the transform handle disabled when switching away from the object while
+  in edit mode.
+
+### Changed
+- [#1784] Removed dependency on `com.vrchat.avatars`
+- Performance improvements for `MA Fit Preview`
+- [#1776] Mesh Cutter components parented underneath a mesh, will ignore that mesh and its parents when considering
+  whether they are constant-on.
+    - This improves performance, and improves compatibility with non-VRChat platforms.
+
+## [1.14.4-beta.3] - [2025-10-27]
+
+### Fixed
+- [#1791] `World Fixed Object` would double the scale of objects it's attached to
+- [#1794] `Fit Preview` would break if an unsaved scene was opened
+
+### Changed
+- [#1794] When selecting one of the avatar's original bones, the `Fit Preview` window's manipulation handles will now
+control the simulated avatar's corresponding bones.
+- [#1794] The `Fit Preview` window will hide gizmos when the parent avatar is selected
+
+## [1.14.4-beta.2] - [2025-10-10]
+
+### Removed
+- [#1774] Removed the "Tools -> Activate PBs" menu item. This was an early test script which was not intended to be included.
+
+## [1.14.4-beta.1] - [2025-09-24]
+
+### Added
+- Added `MA Fit Preview`, a new feature which allows you to pose a copy of your avatar, with physbones moving in edit mode.
+    - You can adjust constraint and physbone settings, and have them reflected in the preview copy in real time.
+
 ## [1.14.3] - [2025-09-18]
 
 ### Fixed

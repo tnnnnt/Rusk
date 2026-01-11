@@ -1,5 +1,4 @@
-﻿#if MA_VRCSDK3_AVATARS
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -37,7 +36,14 @@ namespace nadena.dev.modular_avatar.core.editor
 
         public ImmutableDictionary<string, ModularAvatarMenuItem> ForceMenuItems { get; set; } =
             ImmutableDictionary<string, ModularAvatarMenuItem>.Empty;
-        
+
+        public static AnalysisResult NullAnalysis =>
+            new()
+            {
+                Shapes = new Dictionary<TargetProp, AnimatedProperty>(),
+                InitialStates = new Dictionary<TargetProp, object>()
+            };
+
         public ReactiveObjectAnalyzer(ndmf.BuildContext context)
         {
             _computeContext = ComputeContext.NullContext;
@@ -62,11 +68,15 @@ namespace nadena.dev.modular_avatar.core.editor
 
         public string GetMenuItemProperty(GameObject obj)
         {
+#if MA_VRCSDK3_AVATARS
             var mami = obj?.GetComponent<ModularAvatarMenuItem>();
             if (mami == null) return null;
 
             return ParameterAssignerPass.AssignMenuItemParameter(mami, _simulationInitialStates, ForceMenuItems)
                 ?.Parameter;
+#else
+            return null;
+#endif
         }
 
         public struct AnalysisResult
@@ -83,6 +93,11 @@ namespace nadena.dev.modular_avatar.core.editor
             {
                 _analysisCache = new PropCache<GameObject, AnalysisResult>("ROAnalyzer", (ctx, root) =>
                 {
+                    if (!ctx.Observe(root, obj => obj.activeInHierarchy))
+                    {
+                        return NullAnalysis;
+                    }
+
                     var analysis = new ReactiveObjectAnalyzer(ctx);
                     analysis.ForcePropertyOverrides = ctx.Observe(ROSimulator.PropertyOverrides, a=>a, (a,b) => false)
                         ?? ImmutableDictionary<string, float>.Empty;
@@ -117,7 +132,7 @@ namespace nadena.dev.modular_avatar.core.editor
             LocateBlendshapeSyncs(root); 
             
             Dictionary<TargetProp, AnimatedProperty> shapes = FindShapes(root);
-            FindDeleteMeshByMask(shapes, root);
+            FindMeshCutter(shapes, root);
             FindObjectToggles(shapes, root);
             FindMaterialChangers(shapes, root);
 
@@ -374,4 +389,3 @@ namespace nadena.dev.modular_avatar.core.editor
         }
     }
 }
-#endif

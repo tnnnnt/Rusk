@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using VRC.Core;
 
@@ -36,6 +37,8 @@ namespace VRC.SDKBase.Editor.Api
         public AvatarStyles Styles { get; set; }
         public bool Lock { get; set; }
         public string ActiveAssetReviewId { get; set; }
+        
+        public bool PendingUpload { get; set; }
 
         [JsonProperty("created_at")]
         public DateTime CreatedAt { get; set; }
@@ -76,6 +79,19 @@ namespace VRC.SDKBase.Editor.Api
         public string GetLatestAssetUrlForCurrentPlatform()
         {
             return GetLatestAssetUrlForPlatform(Tools.Platform);
+        }
+
+        /// <summary>
+        /// Checks if user-editable data is equal between avatar records
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public bool ContentInfoEqual(VRCAvatar target)
+        {
+            return target.Name.Equals(Name) &&
+                target.Description.Equals(Description) &&
+                target.Tags.SequenceEqual(Tags) &&
+                target.ReleaseStatus.Equals(ReleaseStatus);
         }
     }
     

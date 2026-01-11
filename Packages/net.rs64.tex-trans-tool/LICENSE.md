@@ -1,0 +1,41 @@
+Image Redistribution of the files listed below is permitted only as part of the official TexTransTool package.
+If you wish to modify them, please replace them with other images or delete them.
+Also, if you wish to use the TexTransTool logo as part of an advertisement for your product, please refer to our logo guidelines.
+
+In the event of any discrepancies due to translation, the content of the original Japanese text will take precedence.
+
+All other files are under the MIT License below.
+
+Origin text for jp
+
+Image 以下にあるファイルは、公式の TexTransTool パッケージの一部としてのみ再配布が許可されています。
+改変する場合はほかの画像に置き換えるか、削除してください。
+また、TexTransToolのロゴを自身の商品の広告の一部として使用したい場合は [ロゴのガイドライン](https://ttt.rs64.net/docs/TTT-DependentAssets/LogoGuideline)をご参照ください。
+
+翻訳による齟齬生じた場合日本語の原文の内容を優先します。
+
+ほかのすべてのファイルは 下記 MIT License です。
+
+---
+
+MIT License
+
+Copyright (c) 2023 Reina_Sakiria
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

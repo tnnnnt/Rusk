@@ -1867,7 +1867,7 @@ namespace Lyuma.Av3Emulator.Runtime
 			return stageNameToValue;
 		}
 		void LateRefreshExpressionParameters(Dictionary<string, float> stageNameToValue) {
-			HashSet<string> usedparams = new HashSet<string>(BUILTIN_PARAMETERS.Select(x => x.name));
+			HashSet<string> usedparams = new HashSet<string>();
 			int i = 0;
 			if (stageParameters != null)
 			{
@@ -2154,12 +2154,21 @@ namespace Lyuma.Av3Emulator.Runtime
 							if (allXTransforms[i] == null || allTransforms[i] == this.transform) {
 								continue;
 							}
-							allXTransforms[i].localPosition = allTransforms[i].localPosition;
-							allXTransforms[i].localRotation = allTransforms[i].localRotation;
+							if (allTransforms[i].localPosition == allTransforms[i].localPosition) {
+								// self-comparison to prevent copying NaN. See issue #215
+								allXTransforms[i].localPosition = allTransforms[i].localPosition;
+							}
+							if (allTransforms[i].localRotation == allTransforms[i].localRotation) {
+								// self-comparison to prevent copying NaN. See issue #215
+								allXTransforms[i].localRotation = allTransforms[i].localRotation;
+							}
 							if(allTransforms[i] == head && EnableHeadScaling) {
 								allXTransforms[i].localScale = new Vector3(1.0f, 1.0f, 1.0f);
 							} else {
-								allXTransforms[i].localScale = allTransforms[i].localScale;
+								if (allTransforms[i].localScale == allTransforms[i].localScale) {
+									// self-comparison to prevent copying NaN. See issue #215
+									allXTransforms[i].localScale = allTransforms[i].localScale;
+								}
 							}
 							bool theirs = allTransforms[i].gameObject.activeSelf;
 							if (allXTransforms[i].gameObject.activeSelf != theirs) {
@@ -2753,6 +2762,26 @@ namespace Lyuma.Av3Emulator.Runtime
 				EnableAvatarScaling = AvatarSyncSource.EnableAvatarScaling;
 				AvatarHeight = AvatarSyncSource.AvatarHeight;
 			}
+			
+			foreach (BuiltinParameterDefinition definition in BUILTIN_PARAMETERS)
+			{
+				if (definition.type == VRCExpressionParameters.ValueType.Bool)
+				{
+					var param = Bools.FirstOrDefault(x => x.name == definition.name);
+					if (param != null) param.value = (bool)definition.valueGetter(this);
+				}
+				if (definition.type == VRCExpressionParameters.ValueType.Int)
+				{
+					var param = Ints.FirstOrDefault(x => x.name == definition.name);
+					if (param != null) param.value = (int)definition.valueGetter(this);
+				}
+				if (definition.type == VRCExpressionParameters.ValueType.Float)
+				{
+					var param = Floats.FirstOrDefault(x => x.name == definition.name);
+					if (param != null) param.value = (float)definition.valueGetter(this);
+				}
+			}
+			
 			for (int i = 0; i < Floats.Count; i++) {
 				if (Floats[i].expressionValue != Floats[i].lastExpressionValue_) {
 					Floats[i].exportedValue = Floats[i].expressionValue;

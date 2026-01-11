@@ -20,9 +20,6 @@ public partial class VRCSdkControlPanel : EditorWindow
     static List<ApiWorld> uploadedWorlds = null;
     static List<ApiAvatar> testAvatars = null;
     
-#if VRC_ENABLE_PROPS
-    private static List<VRCProp> uploadedProps = null;
-#endif
     
     public static Dictionary<string, Texture2D> ImageCache = new Dictionary<string, Texture2D>();
 
@@ -31,18 +28,12 @@ public partial class VRCSdkControlPanel : EditorWindow
 
     static EditorCoroutine fetchingAvatars = null, fetchingWorlds = null;
     
-#if VRC_ENABLE_PROPS
-    private static bool fetchingProps = false;
-#endif
 
     private static string searchString = "";
     private static bool WorldsToggle = true;
     private static bool AvatarsToggle = true;
     private static bool TestAvatarsToggle = true;
 
-#if VRC_ENABLE_PROPS
-    private static bool PropsToggle = true;
-#endif
     
     const string WORLDS_WEB_URL = "https://vrchat.com/home/content/worlds";
     const string WORLD_WEB_URL = "https://vrchat.com/home/content/worlds/";
@@ -80,10 +71,6 @@ public partial class VRCSdkControlPanel : EditorWindow
         uploadedWorlds = null;
         uploadedAvatars = null;
         testAvatars = null;
-#if VRC_ENABLE_PROPS
-        uploadedProps = null;
-        fetchingProps = false;
-#endif
         ImageCache.Clear();
     }
 
@@ -173,49 +160,6 @@ public partial class VRCSdkControlPanel : EditorWindow
 #endif
     }
 
-#if VRC_ENABLE_PROPS
-    private static async Task<List<VRCProp>> FetchProps()
-    {
-        fetchingProps = true;
-        var offset = 0;
-        List<VRCProp> propsResponse;
-        var fetchedProps = new List<VRCProp>();
-        do
-        {
-            try
-            {
-                propsResponse = await VRCApi.GetProps(100, offset, true);
-                foreach (var prop in propsResponse)
-                {
-                    var image = await VRCApi.GetImage(prop.ThumbnailImageUrl);
-                    if (image != null)
-                    {
-                        ImageCache[prop.ID] = image;
-                    }
-                }
-
-                fetchedProps.AddRange(propsResponse);
-                offset += 100;
-                propsResponse.Clear();
-            }
-            catch (ApiErrorException e)
-            {
-                Debug.LogError($"[{e.StatusCode}] Error fetching props: {e.ErrorMessage}");
-                break;
-            }
-            catch (Exception e)
-            {
-                Debug.LogException(e);
-                break;
-            }
-        } while (propsResponse.Count > 0);
-        
-        fetchingProps = false;
-
-        uploadedProps = fetchedProps;
-        return fetchedProps;
-    }
-#endif
 
     private static void FetchWorlds(int offset = 0)
     {
@@ -378,12 +322,6 @@ public partial class VRCSdkControlPanel : EditorWindow
                     AvatarsListGUI(expandedLayout, ref updatedContent);
                 }
 
-#if VRC_ENABLE_PROPS
-                if (uploadedProps?.Count > 0)
-                {
-                    PropsListGUI(ref updatedContent);
-                }
-#endif
                 
                 if (testAvatars.Count > 0)
                 {
@@ -556,90 +494,6 @@ public partial class VRCSdkControlPanel : EditorWindow
             }
         }
     }
-#if VRC_ENABLE_PROPS
-    private void PropsListGUI(ref bool updatedContent)
-    {
-        EditorGUILayout.Space();
-
-        using (new EditorGUILayout.HorizontalScope())
-        {
-            EditorGUILayout.LabelField("Props", EditorStyles.boldLabel, GUILayout.ExpandWidth(false),
-                GUILayout.Width(65));
-            PropsToggle = EditorGUILayout.Foldout(PropsToggle, new GUIContent(""));
-        }
-
-        EditorGUILayout.Space();
-
-        if (PropsToggle)
-        {
-            foreach (var prop in uploadedProps)
-            {
-                if (!prop.Name.ToLowerInvariant().Contains(searchString.ToLowerInvariant()))
-                    continue;
-
-                using (new EditorGUILayout.HorizontalScope(EditorStyles.helpBox))
-                {
-                    if (ImageCache.ContainsKey(prop.ID))
-                    {
-                        if (GUILayout.Button(ImageCache[prop.ID], GUILayout.Height(AVATAR_IMAGE_BUTTON_HEIGHT),
-                                GUILayout.Width(AVATAR_IMAGE_BUTTON_WIDTH)))
-                            Application.OpenURL(prop.ImageUrl);
-                    }
-                    else
-                    {
-                        if (GUILayout.Button("", GUILayout.Height(AVATAR_IMAGE_BUTTON_HEIGHT),
-                                GUILayout.Width(AVATAR_IMAGE_BUTTON_WIDTH)))
-                            Application.OpenURL(prop.ImageUrl);
-                    }
-
-                    using (new EditorGUILayout.VerticalScope())
-                    {
-                        using (new EditorGUILayout.HorizontalScope())
-                        {
-                            EditorGUILayout.LabelField(prop.Name, contentTitleStyle);
-                            if (GUILayout.Button("Open on web", GUILayout.Width(OPEN_ON_WEB_BUTTON_WIDTH)))
-                                Application.OpenURL(AVATAR_WEB_URL + prop.ID);
-                        }
-                        
-                        if (GUILayout.Button("Copy ID", GUILayout.Width(COPY_AVATAR_ID_BUTTON_WIDTH)))
-                        {
-                            TextEditor te = new TextEditor();
-                            te.text = prop.ID;
-                            te.SelectAll();
-                            te.Copy();
-                        }
-
-                        if (GUILayout.Button("Delete", GUILayout.Width(DELETE_AVATAR_BUTTON_WIDTH)))
-                        {
-                            if (EditorUtility.DisplayDialog("Delete " + prop.Name + "?",
-                                    "Are you sure you want to delete " + prop.Name + "? This cannot be undone.", "Delete",
-                                    "Cancel"))
-                            {
-                                foreach (VRC.Core.PipelineManager pm in FindObjectsOfType<VRC.Core.PipelineManager>()
-                                             .Where(pm => pm.blueprintId == prop.ID))
-                                {
-                                    pm.blueprintId = "";
-
-                                    EditorUtility.SetDirty(pm);
-                                    UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(pm.gameObject.scene);
-                                    UnityEditor.SceneManagement.EditorSceneManager.SaveScene(pm.gameObject.scene);
-                                }
-                                
-                                VRCApi.Delete("props/" + prop.ID).ConfigureAwait(false);
-                                uploadedProps.RemoveAll(p => p.ID == prop.ID);
-                                if (ImageCache.ContainsKey(prop.ID))
-                                    ImageCache.Remove(prop.ID);
-                                
-                                updatedContent = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-#endif
     
     private void TestAvatarsListGUI(bool expandedLayout, ref bool updatedContent)
     {
@@ -889,22 +743,10 @@ public partial class VRCSdkControlPanel : EditorWindow
                 EditorCoroutine.Start(FetchUploadedData());
             }
 
-#if VRC_ENABLE_PROPS
-            if (uploadedProps == null)
-            {
-                if (!fetchingProps && APIUser.CurrentUser != null && !string.IsNullOrEmpty(APIUser.CurrentUser.id))
-                {
-                    FetchProps().ConfigureAwait(false);
-                }
-            }
-#endif
 
             if (
                 fetchingWorlds != null
                 || fetchingAvatars != null
-#if VRC_ENABLE_PROPS
-                || fetchingProps
-#endif
             )
             {
                 GUILayout.BeginVertical(boxGuiStyle, GUILayout.Width(SdkWindowWidth - 8));

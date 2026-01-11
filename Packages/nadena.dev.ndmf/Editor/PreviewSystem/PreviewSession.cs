@@ -1,37 +1,48 @@
 ﻿#region
 
+#nullable enable
+
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 
 #endregion
 
 namespace nadena.dev.ndmf.preview
 {
+    public delegate ImmutableHashSet<Renderer> HiddenRenderersDelegate(ComputeContext ctx);
+    
     /// <summary>
-    /// TODO: Document
-    ///
-    /// (For now, this isn't very useful; use  `DeclaringPass.PreviewingWith` instead)
+    /// The PreviewSession class allows you to override preview behavior for a particular camera.
+    /// This in particularly allows you to display only specific renderers, or apply additional
+    /// transformations to the preview.
     /// </summary>
-    internal class PreviewSession // : IDisposable
+    public class PreviewSession : IDisposable
     {
         #region Static State
 
         /// <summary>
         /// The PreviewSession used for any cameras not overriden using `OverrideCamera`.
         /// </summary>
-        public static PreviewSession Current { get; set; }
+        public static PreviewSession? Current { get; set; }
 
-#if FUTURE_API
+        private static readonly Dictionary<Camera, PreviewSession> _cameraOverrides = new();
+
+        internal static PreviewSession? ForCamera(Camera camera)
+        {
+            return _cameraOverrides.GetValueOrDefault(camera) ?? Current;
+        }
+        
         /// <summary>
         /// Applies this PreviewSession to the `target` camera.
         /// </summary>
         /// <param name="target"></param>
         public void OverrideCamera(Camera target)
         {
-            throw new NotImplementedException();
+            _cameraOverrides[target] = this;
         }
 
         /// <summary>
@@ -40,15 +51,14 @@ namespace nadena.dev.ndmf.preview
         /// <param name="target"></param>
         public static void ClearCameraOverride(Camera target)
         {
-            throw new NotImplementedException();
+            _cameraOverrides.Remove(target);
         }
-#endif
-
+        
         #endregion
 
-        internal IEnumerable<(Renderer, Renderer)> OnPreCull(bool isSceneCamera)
+        internal IEnumerable<(Renderer, Renderer?)> OnPreCull(bool isSceneCamera)
         {
-            return _proxySession?.OnPreCull(isSceneCamera) ?? Enumerable.Empty<(Renderer, Renderer)>();
+            return _proxySession?.OnPreCull(isSceneCamera) ?? Enumerable.Empty<(Renderer, Renderer?)>();
         }
         
         internal ImmutableDictionary<Renderer, Renderer> OriginalToProxyRenderer =>
@@ -66,6 +76,24 @@ namespace nadena.dev.ndmf.preview
 
         private ProxySession _proxySession;
 
+        [UsedImplicitly] // primarily for debugger usage
+        private readonly string _name;
+
+        private HiddenRenderersDelegate? _hiddenRenderers;
+
+        /// <summary>
+        /// This delegate is invoked to obtain a list of renderers to hide in cameras bound to this session.
+        /// </summary>
+        public HiddenRenderersDelegate? HiddenRenderers
+        {
+            get => _hiddenRenderers;
+            set
+            {
+                _hiddenRenderers = value;
+                RebuildSequence();
+            }
+        }
+
         internal GameObject GetOriginalObjectForProxy(GameObject proxy)
         {
             return _proxySession?.GetOriginalObjectForProxy(proxy);
@@ -74,6 +102,16 @@ namespace nadena.dev.ndmf.preview
         public PreviewSession()
         {
             _proxySession = new ProxySession(ImmutableList<IRenderFilter>.Empty);
+            _name = "Default";
+        }
+
+        private PreviewSession(PreviewSession source, string name)
+        {
+            _proxySession = new ProxySession(ImmutableList<IRenderFilter>.Empty);
+            _sequence = source._sequence.Clone();
+            _filters = source._filters.ToDictionary(kv => kv.Key, kv => kv.Value);
+            _name = name;
+            ForceRebuild();
         }
 
         public void ForceRebuild()
@@ -131,24 +169,28 @@ namespace nadena.dev.ndmf.preview
             var filters = sequence.Select(p => _filters.GetValueOrDefault(p)).Where(f => f != null).ToImmutableList();
 
             _proxySession.Filters = filters;
+            _proxySession.HideRenderers = HiddenRenderers;
         }
 
-#if FUTURE_API
         /// <summary>
         /// Returns a new PreviewSession which inherits all mutators from the parent session. Any mutators added to this
         /// new session run after the parent session's mutators.
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public PreviewSession Fork()
+        public PreviewSession Fork(string name = "Preview session")
         {
-            throw new NotImplementedException();
+            return new PreviewSession(this, name);
         }
-#endif
         
         public void Dispose()
         {
             _proxySession.Dispose();
+
+            foreach (var (k, _) in _cameraOverrides.Where(kv => kv.Key == null || kv.Value == this).ToList())
+            {
+                _cameraOverrides.Remove(k);
+            }
         }
     }
 }

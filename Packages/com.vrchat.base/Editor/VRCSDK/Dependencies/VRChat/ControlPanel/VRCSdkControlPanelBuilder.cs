@@ -1219,12 +1219,12 @@ public partial class VRCSdkControlPanel : EditorWindow
         }
 
         string message = VRC.Core.ConfigManager.RemoteConfig.GetString("sdkNotAllowedToPublishMessage");
-        int result = UnityEditor.EditorUtility.DisplayDialogComplex("VRChat SDK", message, "Developer FAQ", "VRChat Discord", "OK");
+        int result = UnityEditor.EditorUtility.DisplayDialogComplex("VRChat SDK", message, "Developer FAQ", "OK", "VRChat Discord");
         if (result == 0)
         {
             VRCSdkControlPanelHelp.ShowDeveloperFAQ();
         }
-        if (result == 1)
+        if (result == 2)
         {
             VRCSdkControlPanelHelp.ShowVRChatDiscord();
         }

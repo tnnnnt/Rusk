@@ -25,6 +25,7 @@
 
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -42,7 +43,7 @@ namespace anatawa12.gists
         }
 
         [MenuItem("CONTEXT/PipelineManager/Set Random Blueprint ID")]
-        private static void Component(MenuCommand menuCommand)
+        private static async void Component(MenuCommand menuCommand)
         {
             if (PipelineManagerType == null || !PipelineManagerType.IsInstanceOfType(menuCommand.context))
                 return;
@@ -82,7 +83,7 @@ namespace anatawa12.gists
 
             if (isAvatar)
             {
-                blueprintId.stringValue = "avtr_" + Guid.NewGuid();
+                blueprintId.stringValue = await CreateNewAvatar(context.gameObject.name);
                 contentType.enumValueIndex = (int)ContentType.avatar;
             }
             else
@@ -95,6 +96,69 @@ namespace anatawa12.gists
             completedSDKPipeline.boolValue = false;
 
             serialized.ApplyModifiedProperties();
+        }
+
+        private static async Task<string> CreateNewAvatar(string name)
+        {
+            var vrcApiType = FindType("VRC.SDKBase.Editor.Api.VRCApi");
+            var vrcAvatarType = FindType("VRC.SDKBase.Editor.Api.VRCAvatar");
+            var nameProperty = vrcAvatarType?.GetProperty("Name");
+            var descriptionProperty = vrcAvatarType?.GetProperty("Description");
+            var tagsProperty = vrcAvatarType?.GetProperty("Tags");
+            var releaseStatusProperty = vrcAvatarType?.GetProperty("ReleaseStatus");
+            var idProperty = vrcAvatarType?.GetProperty("ID");
+            var taskOfVrcAvatarType = vrcAvatarType != null ? FindType("System.Threading.Tasks.Task`1")?.MakeGenericType(vrcAvatarType) : null;
+            var taskOfVRCAvatarResultProperty = taskOfVrcAvatarType?.GetProperty("Result");
+
+            // We don't simply use VRCApi.CreateNewAvatar because it may not exist in older SDK versions.
+            // We don't simply use GetMethods because VRChat preserves source-compatibility but not binary-compatibility, in other words, VRChat may add some optional parameters.
+            var createAvatarRecordMethod = vrcApiType
+                ?.GetMethods(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public)
+                .Where(method =>
+                {
+                    var parameters = method.GetParameters();
+                    return method.Name == "CreateAvatarRecord"
+                           && parameters.Length >= 1
+                           && parameters[0].ParameterType == vrcAvatarType
+                           && parameters.Skip(1).All(p => p.IsOptional);
+                })
+                .FirstOrDefault();
+            if (
+                vrcApiType != null && vrcAvatarType != null && 
+                createAvatarRecordMethod != null &&
+                nameProperty != null && nameProperty.PropertyType == typeof(string) && nameProperty.GetSetMethod() is {} setNameMethod &&
+                descriptionProperty != null && descriptionProperty.PropertyType == typeof(string) && descriptionProperty.GetSetMethod() is {} setDescriptionMethod &&
+                tagsProperty != null && tagsProperty.PropertyType == typeof(System.Collections.Generic.List<string>) && tagsProperty.GetSetMethod() is {} setTagsMethod &&
+                releaseStatusProperty != null && releaseStatusProperty.PropertyType == typeof(string) && releaseStatusProperty.GetSetMethod() is {} setReleaseStatusMethod &&
+                idProperty != null && idProperty.PropertyType == typeof(string) &&
+                taskOfVrcAvatarType != null && taskOfVrcAvatarType.IsAssignableFrom(createAvatarRecordMethod.ReturnType) &&
+                taskOfVRCAvatarResultProperty != null && taskOfVRCAvatarResultProperty.GetGetMethod() is {} getResultMethod
+                )
+            {
+                var vrcAvatarInstance = Activator.CreateInstance(vrcAvatarType);
+                setNameMethod.Invoke(vrcAvatarInstance, new object[] { name });
+                setDescriptionMethod.Invoke(vrcAvatarInstance, new object[] { "" });
+                setTagsMethod.Invoke(vrcAvatarInstance, new object[] { new System.Collections.Generic.List<string>() });
+                setReleaseStatusMethod.Invoke(vrcAvatarInstance, new object[] { "private" });
+
+                // create parameters with default values
+                var parameters = createAvatarRecordMethod.GetParameters();
+                var args = new object[parameters.Length];
+                args[0] = vrcAvatarInstance;
+                for (int i = 1; i < parameters.Length; i++)
+                    args[i] = Type.Missing;
+                var task = (Task)createAvatarRecordMethod.Invoke(null, args);
+                await task;
+                var createdAvatar = getResultMethod.Invoke(task, null);
+                var id = (string)idProperty.GetValue(createdAvatar);
+
+                return id;
+            }
+            else
+            {
+                return "avtr_" + Guid.NewGuid();
+            }
+            // The versions before CreateNewAvatar method. simply use random guid.
         }
 
         private static Type FindType(string typeName)

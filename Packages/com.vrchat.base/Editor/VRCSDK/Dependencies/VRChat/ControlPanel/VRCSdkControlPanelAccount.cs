@@ -218,9 +218,6 @@ public partial class VRCSdkControlPanel : EditorWindow
         EditorGUILayout.BeginVertical();
         EditorGUILayout.LabelField("World Creator Status: ", APIUser.CurrentUser.canPublishWorlds ? "Allowed to publish worlds" : "Not yet allowed to publish worlds");
         EditorGUILayout.LabelField("Avatar Creator Status: ", APIUser.CurrentUser.canPublishAvatars ? "Allowed to publish avatars" : "Not yet allowed to publish avatars");
-#if VRC_ENABLE_PROPS
-        EditorGUILayout.LabelField("Prop Creator Status: ", APIUser.CurrentUser.canPublishProps ? "Allowed to publish props" : "Not yet allowed to publish props");
-#endif
         EditorGUILayout.EndVertical();
 
         if (!APIUser.CurrentUser.canPublishWorldsAndAvatars)

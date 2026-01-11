@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -5,6 +6,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
+using VRC.SDKBase.Editor.Versioning;
 
 namespace VRC.SDK3.Editor
 {
@@ -84,6 +86,27 @@ namespace VRC.SDK3.Editor
             };
             Root.Add(field);
             return field;
+        }
+        
+        /// <summary>
+        /// Adds a version management system to the inspector. See VRCPickupEditor3 for an example of usage.
+        /// </summary>
+        /// <param name="versionProperty">SerializedProperty for the version enum</param>
+        /// <param name="migrator">Component-specific migration logic that provides the latest version</param>
+        /// <param name="documentationUrl">Optional URL for help documentation</param>
+        /// <returns>ComponentVersionUI instance for further customization</returns>
+        protected ComponentVersionUI<TVersion> AddVersionSystem<TVersion>(
+            SerializedProperty versionProperty,
+            ComponentVersionMigrator<TVersion> migrator,
+            string documentationUrl = null
+        ) where TVersion : Enum
+        {
+            var latestVersion = migrator.GetLatestVersion(); // Get latest version from migrator
+            var versionUI = new ComponentVersionUI<TVersion>(versionProperty, migrator, latestVersion, documentationUrl);
+            versionUI.CreateVersionField(Root);
+            versionUI.CreateUpgradeInfo(Root);
+            versionUI.RefreshUpgradeInfo();
+            return versionUI;
         }
 
     }

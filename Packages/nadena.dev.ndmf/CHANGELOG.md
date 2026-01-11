@@ -20,6 +20,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Deprecated
 
+## [1.10.1] - [2025-12-15]
+
+### Added
+- [#744] Added `AvatarProcessor.OnManualProcessAvatar` event, which allows subscribing to manual avatar builds.
+
+### Fixed
+- [#749] Tolerated some cases of null nodes being found in animator traversal, and added additional debugging for this
+case.
+
+## [1.10.0] - [2025-12-03]
+
+### Added
+- Exposed `PreviewSession` class, allowing for custom preview behavior to be set for specific cameras.
+- [#734] Exposes the `PropCache` class (previously a Modular Avatar private API), which allows for ComputeContext-aware
+memoization and caching.
+- [#719] Added `AvatarProcessor.ManualProcessAvatar()`, which handles platform aware manual avatar builds.
+- [#723] Added better error reporting when mip streaming is missing on a texture in a VRChat avatar build
+- [#738] Included depenendencies directory in build for use in non-VRCSDK projects
+
+### Fixed
+- [#712] Fix an issue where preview might break if certain internal objects are destroyed unexpectedly.
+- [#718] Fix NDMF preview in cross platform projects not handling cross platform avatar roots appropriately.
+- [#733] Improve preview system performance
+- [#734] Sometimes, `ComputeContext.FlushInvalidates` would not reliably flush all pending invalidate calls
+- [#737] Fixed an issue that occasionally resulted in errors while processing previews
+
+### Changed
+- [#733] `ComputeContext.GetAvatarRoots` will now return only active-in-hierarchy avatar roots
+- [#740] Localization key will be shown as a fallback if no localized title is provided.
+
 ## [1.9.4] - [2025-09-20]
 
 ### Fixed

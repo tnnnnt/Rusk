@@ -19,6 +19,79 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Deprecated
 
+## [1.10.1] - [2025-12-15]
+
+### Added
+- [#744] Added `AvatarProcessor.OnManualProcessAvatar` event, which allows subscribing to manual avatar builds.
+
+### Fixed
+- [#749] Tolerated some cases of null nodes being found in animator traversal, and added additional debugging for this
+  case.
+
+## [1.10.0] - [2025-12-03]
+
+### Changed
+- [#740] Localization key will be shown as a fallback if no localized title is provided.
+
+## [1.10.0-rc.2] - [2025-11-21]
+
+### Fixed
+- Dependencies folder was not actually included, oops.
+
+## [1.10.0-rc.1] - [2025-11-21]
+
+### Added
+- [#738] Included depenendencies directory in build for use in non-VRCSDK projects
+
+## [1.10.0-rc.0] - [2025-11-19]
+
+### Fixed
+- [#737] Fixed an issue that occasionally resulted in errors while processing previews
+
+## [1.10.0-beta.4] - [2025-11-16]
+
+### Added
+- [#734] Exposes the `PropCache` class (previously a Modular Avatar private API), which allows for ComputeContext-aware
+  memoization and caching.
+
+### Fixed
+- [#733] Improve preview system performance
+- [#734] Sometimes, `ComputeContext.FlushInvalidates` would not reliably flush all pending invalidate calls
+
+### Changed
+
+- [#733] `ComputeContext.GetAvatarRoots` will now return only active-in-hierarchy avatar roots
+
+## [1.10.0-beta.3] - [2025-11-03]
+
+### Fixed
+- [#731] Mip streaming checks now ignore built-in resources
+- [#731] Mip streaming checks now produce a non-fatal error
+
+## [1.10.0-beta.2] - [2025-11-02]
+
+### Added
+- [#730] Added `PreviewSession.HiddenRenderers` and `HiddenRenderersDelegate`
+- [#719] Added `AvatarProcessor.ManualProcessAvatar()`, which handles platform aware manual avatar builds.
+
+### Fixed
+- [#718] Fix NDMF preview in cross platform projects not handling cross platform avatar roots appropriately.
+- [#729] Fixed some false positives and build failures with CheckMipStreamingPass
+
+## [1.10.0-beta.1] - [2025-10-27]
+
+### Added
+- [#723] Added better error reporting when mip streaming is missing on a texture in a VRChat avatar build
+
+## [1.10.0-beta.0] - [2025-09-20]
+
+### Added
+
+- Exposed `PreviewSession` class, allowing for custom preview behavior to be set for specific cameras.
+
+### Fixed
+- [#712] Fix an issue where preview might break if certain internal objects are destroyed unexpectedly.
+
 ## [1.9.4] - [2025-09-20]
 
 ### Fixed

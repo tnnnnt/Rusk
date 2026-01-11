@@ -1,0 +1,742 @@
+msgid ""
+msgstr ""
+"Language: en-US\n"
+
+# TTT Menu
+
+msgid "TTTMenu:TTTConfigMenu:InternalRenderTextureFormat"
+msgstr "InternalRenderTextureFormat";
+
+msgid "TTTMenu:TTTConfigMenu:InternalRenderTextureFormat:Byte"
+msgstr "Byte : 8bit - unsigned integer"
+
+msgid "TTTMenu:TTTConfigMenu:InternalRenderTextureFormat:UShort"
+msgstr "UShort : 16bit - unsigned integer"
+
+msgid "TTTMenu:TTTConfigMenu:InternalRenderTextureFormat:Half"
+msgstr "Half : 16bit - signed floating point"
+
+msgid "TTTMenu:TTTConfigMenu:InternalRenderTextureFormat:Float"
+msgstr "Float : 32bit - signed floating point"
+
+msgid "TTTMenu:TTTConfigMenu:DisplayVRAMIcon"
+msgstr "Display AffectVRAMIcon"
+
+msgid "TTTMenu:TTTConfigMenu:DisplayVRAMIcon:DisableWarningMessage"
+msgstr "AffectVRAMIcon is displayed for settings that may increase or decrease VRAM. Do you want to hide it?"
+
+msgid "TTTMenu:TTTConfigMenu:DisplayExperimentalWarning"
+msgstr "Display warnings for experimental features"
+
+msgid "TTTMenu:TTTConfigMenu:DisplayExperimentalWarning:DisableWarningMessage"
+msgstr "Experimental features are handled differently from normal features. Do you want to hide warnings for experimental features?"
+
+msgid "TTTMenu:TTTConfigMenu:TexTransCoreEngineBackend"
+msgstr "TexTransCoreEngine Backend"
+
+#  Commons
+
+msgid "Common:Preview"
+msgstr "Preview"
+
+msgid "Common:ExitPreview"
+msgstr "ExitPreview"
+
+msgid "Common:PreviewNotAvailable"
+msgstr "(Other Previewing Or Previewing Animation)"
+
+msgid "Common:OverridePreviewThis"
+msgstr "Other Previewing. Override Preview this"
+
+msgid "Common:ExperimentalFuture"
+msgstr "Experimental Future"
+
+msgid "Common:ExperimentalWarning"
+msgstr "is an experimental feature. Features may be changed or removed without notice."
+
+msgid "Common:error:BuildWasRunDuringPreviewing"
+msgstr "Build was run during previewing."
+
+msgid "Common:error:BuildWasRunDuringPreviewing:hint"
+msgstr "If this error, preview has exit. please try again."
+
+msgid "Common:error:TexTransBehaviorInsideNestedNonGroupComponentIsDeprecatedWarning"
+msgstr "The Component is nested inside a TexTransTool's non-Group component!"
+
+msgid "Common:error:TexTransBehaviorInsideNestedNonGroupComponentIsDeprecatedWarning:description"
+msgstr "In the next version v0.9.x, nesting TexTransTool components other then Group component(such as TexTransGroup) will not longer work."
+
+msgid "Common:error:TexTransBehaviorInsideNestedNonGroupComponentIsDeprecatedWarning:hint"
+msgstr "Try not to nest component, but place them elsewhere."
+
+msgid "Common:warning:ContainsOldSaveDataComponents"
+msgstr "The components contains old version save data!"
+
+msgid "Common:warning:ContainsOldSaveDataComponents:description"
+msgstr "If you don't migrate, it may not properly working.\nThe migration should be run from Tools/TexTransTool/Migrator on Top toolbar."
+
+msgid "Common:ndmf:DisableThisComponentPhasePreview"
+msgstr "(NDMF) Disable {0} Preview"
+
+msgid "Common:ndmf:EnableThisComponentPhasePreview"
+msgstr "(NDMF) Enable {0} Preview"
+
+msgid "Common:RendererSelectMode"
+msgstr "RendererSelectMode"
+
+msgid "Common:RendererSelectMode:Auto"
+msgstr "Auto"
+
+msgid "Common:RendererSelectMode:Manual"
+msgstr "Manual"
+
+msgid "Common:info:AlphaContainsTextureCompressToAlphaMissingFormat"
+msgstr "It texture is may contains alpha, but is compressed non-alpha format."
+
+msgid "Common:info:AlphaContainsTextureCompressToAlphaMissingFormat:description"
+msgstr "It my be false positive, if it is Intentional or no-problem, just ignore it completely."
+
+msgid "Common:button:ThisComponentSaveDataIsOldOpenMigratorWindow"
+msgstr "This component's save data is older version! open the Migrator window."
+
+#  AtlasTexture
+
+msgid "AtlasTexture:error:TTTNotExecutable"
+msgstr "AtlasTexture is not executable."
+
+msgid "AtlasTexture:error:TTTNotExecutable:hint"
+msgstr "Please review TargetRoot and MaterialSelect."
+
+msgid "AtlasTexture:info:TargetNotSet"
+msgstr "AtlasTarget not set!"
+
+msgid "AtlasTexture:info:TargetNotFound"
+msgstr "AtlasTarget not found!"
+
+msgid "AtlasTexture:error:RelocationFailed"
+msgstr "Island relocation failed!"
+
+msgid "AtlasTexture:error:RelocationFailed:hint"
+msgstr "Extremely large Padding, or very many atlas target.\nPlease each for decrease Padding, or reduce atlas target."
+
+msgid "AtlasTexture:warn:IslandPaddingIsZeroAndPixelNormalizeUsed"
+msgstr "IslandPadding is zero and PixelNormalize is used. \nPlease note that some Island may overlap and result the different color in some pixel."
+
+msgid "AtlasTexture:warn:IslandPaddingIsZeroAndPixelNormalizeUsed:hint"
+msgstr "increment IslandPadding or place disabled PixelNormalize."
+
+msgid "AtlasTexture:warn:OriginalUVWriteTargetForAlreadyUV"
+msgstr "The original UV write target channel is there already has UV."
+
+msgid "AtlasTexture:warn:OriginalUVWriteTargetForAlreadyUV:description"
+msgstr "If this is intentionally or not a problem, ignore this warning."
+
+msgid "AtlasTexture:info:RelocateResult"
+msgstr "Atlas Relocate Result\nTop free space: {0}\nPriority shrink: {1}x \nOverall shrink: {2}x \nTotal relocate count: {3} \nTime taken relocate: {4}ms"
+
+msgid "AtlasTexture:prop:LimitCandidateMaterials"
+msgstr "LimitCandidateMaterials"
+
+msgid "AtlasTexture:prop:LimitCandidateMaterials:tooltip"
+msgstr "Limit candidate materials to GameObject subordinates."
+
+msgid "AtlasTexture:button:RefreshMaterials"
+msgstr "RefreshMaterials"
+
+msgid "AtlasTexture:button:SelectAll"
+msgstr "SelectAll"
+
+msgid "AtlasTexture:button:Invert"
+msgstr "Invert"
+
+msgid "AtlasTexture:label:Target"
+msgstr "Target"
+
+msgid "AtlasTexture:label:IslandSizePriority"
+msgstr "IslandSizePriority"
+
+msgid "AtlasTexture:prop:IslandSizePriorityTuner"
+msgstr "IslandSizePriorityTuner"
+
+msgid "AtlasTexture:label:Material"
+msgstr "Material"
+
+msgid "AtlasTexture:label:TSM-Header:tooltip"
+msgstr "atlas target  (texture scale offset)  material"
+
+msgid "AtlasTexture:prop:SelectedMaterialView"
+msgstr "SelectedMaterial"
+
+msgid "AtlasTexture:prop:SelectedMaterialView:tooltip"
+msgstr "view for special operations such as prefab override settings"
+
+msgid "AtlasTexture:label:AtlasSettings"
+msgstr "AtlasSettings"
+
+msgid "AtlasTexture:prop:AtlasTextureSize"
+msgstr "AtlasTextureSize"
+
+msgid "AtlasTexture:prop:AtlasTextureSize:tooltip"
+msgstr "Size of atlas texture, square."
+
+msgid "AtlasTexture:prop:AtlasTextureHeightSize"
+msgstr "AtlasTextureHeightSize"
+
+msgid "AtlasTexture:prop:CustomAspect"
+msgstr "CustomAspect"
+
+msgid "AtlasTexture:prop:AtlasTargetUVChannel"
+msgstr "AtlasTargetUVChannel"
+
+msgid "AtlasTexture:prop:UsePrimaryMaximumTexture"
+msgstr "UsePrimaryMaximumTexture"
+
+msgid "AtlasTexture:prop:PrimaryTextureProperty"
+msgstr "PrimaryTextureProperty"
+
+msgid "AtlasTexture:label:MaterialSettings"
+msgstr "MaterialSettings"
+
+msgid "AtlasTexture:prop:MergeMaterialGroups"
+msgstr "MergeMaterialGroups"
+
+msgid "AtlasTexture:prop:AllMaterialMergeReference"
+msgstr "AllMaterialMergeReference"
+
+msgid "AtlasTexture:prop:ForceSetTexture"
+msgstr "ForceSetTexture"
+
+msgid "AtlasTexture:prop:ForceSetTexture:tooltip"
+msgstr "Assign an atlas texture to material even If the texture  not exist in material"
+
+msgid "AtlasTexture:prop:BackGroundColor"
+msgstr "BackGroundColor"
+
+msgid "AtlasTexture:prop:Padding"
+msgstr "Padding"
+
+msgid "AtlasTexture:prop:Padding:tooltip"
+msgstr "Spacing between islands in Island sorting."
+
+msgid "AtlasTexture:prop:IslandSorterName"
+msgstr "IslandSorterName"
+
+msgid "AtlasTexture:prop:IslandSorterName:tooltip"
+msgstr "Name of Island sorter, can not editable."
+
+msgid "AtlasTexture:prop:PixelNormalize"
+msgstr "PixelNormalize"
+
+msgid "AtlasTexture:prop:ExperimentalFuture:WriteOriginalUV"
+msgstr "WriteOriginalUV"
+
+msgid "AtlasTexture:prop:ExperimentalFuture:WriteOriginalUV:tooltip"
+msgstr "Write to any UV the UV when before atlas."
+
+msgid "AtlasTexture:prop:ExperimentalFuture:OriginalUVWriteTargetChannel"
+msgstr "OriginalUVWriteTargetChannel"
+
+msgid "AtlasTexture:prop:ExperimentalFuture:AtlasIslandRelocator"
+msgstr "AtlasIslandRelocator"
+
+msgid "AtlasTexture:prop:ExperimentalFuture:PixelNormalize:tooltip"
+msgstr "Feature of pixel normalize on island move."
+
+msgid "AtlasTexture:prop:MaterialMergeGroups"
+msgstr "MaterialMergeGroups"
+
+msgid "AtlasTexture:prop:MaterialMergeGroups:MergeReferenceMaterial"
+msgstr "MergeReferenceMaterial"
+
+msgid "AtlasTexture:prop:MaterialMergeGroups:GroupMaterials"
+msgstr "GroupMaterials"
+
+msgid "AtlasTexture:prop:IncludeDisabledRenderer"
+msgstr "IncludeDisabledRenderer"
+
+msgid "AtlasTexture:prop:IncludeDisabledRenderer:tooltip"
+msgstr "Option to Include disabled renderers in the atlas."
+
+msgid "AtlasTexture:prop:ForceSizePriority"
+msgstr "ForceSizePriority"
+
+msgid "AtlasTexture:prop:ExperimentalFuture:TextureScaleOffsetReset"
+msgstr "TextureScaleOffsetReset"
+
+msgid "AtlasTexture:prop:ExperimentalFuture:BakedPropertyWriteMaxValue"
+msgstr "BakedPropertyWriteMaxValue"
+
+msgid "AtlasTexture:prop:ExperimentalFuture:UnsetTextures"
+msgstr "UnsetTextures"
+
+msgid "AtlasTexture:prop:TextureFineTuning"
+msgstr "TextureFineTuning"
+
+msgid "AtlasTexture:prop:TextureFineTuning:tooltip"
+msgstr "Setting for various fine tuning for atlas texture."
+
+msgid "AtlasTexture:prop:DownScalingAlgorithm"
+msgstr "DownScalingAlgorithm"
+
+msgid "AtlasTexture:prop:ExperimentalFuture:AutoReferenceCopySetting"
+msgstr "AutoReferenceCopySetting"
+
+msgid "AtlasTexture:prop:ExperimentalFuture:AutoMergeTextureSetting"
+msgstr "AutoMergeTextureSetting"
+
+msgid "AtlasTexture:prop:TextureIndividualFineTuning"
+msgstr "TextureIndividualFineTuning"
+
+msgid "AtlasTexture:prop:OpenTextureFineTuningManager"
+msgstr "OpenTextureFineTuningManager"
+
+msgid "IslandSizePriorityTuner:prop:PriorityValue"
+msgstr "PriorityValue"
+
+msgid "IslandSizePriorityTuner:prop:Materials"
+msgstr "Materials"
+
+msgid "IslandSizePriorityTuner:prop:IslandSelector"
+msgstr "IslandSelector"
+
+msgid "TextureFineTuning:prop:TargetPropertyName"
+msgstr "TargetPropertyName"
+
+msgid "TextureFineTuning:prop:Select"
+msgstr "Select"
+
+msgid "TextureFineTuning:prop:IsRemove"
+msgstr "IsRemove"
+
+msgid "TextureFineTuning:prop:Select:tooltip"
+msgstr "Property select condition."
+
+msgid "TextureFineTuning:prop:Resize"
+msgstr "Resize"
+
+msgid "TextureFineTuning:prop:Resize:tooltip"
+msgstr "Atlas texture tuning of size"
+
+msgid "TextureFineTuning:prop:Resize:Size"
+msgstr "Size"
+
+msgid "TextureFineTuning:prop:Resize:Size:tooltip"
+msgstr "Texture size"
+
+
+msgid "TextureFineTuning:prop:Compress"
+msgstr "Compress"
+
+msgid "TextureFineTuning:prop:Compress:tooltip"
+msgstr "Tuning atlas texture VRAM compression."
+
+msgid "TextureFineTuning:prop:FormatQuality"
+msgstr "FormatQuality"
+
+msgid "TextureFineTuning:prop:FormatQuality:tooltip"
+msgstr "Rough select for texture format."
+
+msgid "TextureFineTuning:prop:UseOverrideTextureFormat"
+msgstr "UseOverrideTextureFormat"
+
+msgid "TextureFineTuning:prop:UseOverrideTextureFormat:tooltip"
+msgstr "Override by detail format specify not rough select."
+
+msgid "TextureFineTuning:prop:OverrideTextureFormat"
+msgstr "OverrideTextureFormat"
+
+msgid "TextureFineTuning:prop:OverrideTextureFormat:tooltip"
+msgstr "Detail format specify."
+
+msgid "TextureFineTuning:prop:SimpleFormatChoices"
+msgstr "SimpleFormatChoices"
+
+msgid "TextureFineTuning:prop:SimpleFormatChoices:tooltip"
+msgstr "Choice texture format in enumerate frequently use."
+
+
+msgid "TextureFineTuning:prop:UnknownTargetPlatform"
+msgstr "UnknownTargetPlatform"
+
+msgid "TextureFineTuning:prop:CompressionQuality"
+msgstr "CompressionQuality"
+
+msgid "TextureFineTuning:prop:CompressionQuality:tooltip"
+msgstr "Crunch compression quality when override texture format in the crunch compression."
+
+msgid "TextureFineTuning:prop:ReferenceCopy"
+msgstr "ReferenceCopy"
+
+msgid "TextureFineTuning:prop:ReferenceCopy:tooltip"
+msgstr "Copy texture generated by AtlasTexture between property."
+
+msgid "TextureFineTuning:prop:ReferenceCopy:SourcePropertyName"
+msgstr "SourcePropertyName"
+
+msgid "TextureFineTuning:prop:ReferenceCopy:SourcePropertyName:tooltip"
+msgstr "Copy source."
+
+msgid "TextureFineTuning:prop:ReferenceCopy:TargetPropertyName"
+msgstr "TargetPropertyName"
+
+msgid "TextureFineTuning:prop:ReferenceCopy:TargetPropertyName:tooltip"
+msgstr "Copy target."
+
+msgid "TextureFineTuning:prop:Remove"
+msgstr "Remove"
+
+msgid "TextureFineTuning:prop:Remove:tooltip"
+msgstr "Settings that prevent the specified texture from being assigned to material."
+
+msgid "TextureFineTuning:prop:MipMapRemove"
+msgstr "MipMapRemove"
+
+msgid "TextureFineTuning:prop:MipMapRemove:tooltip"
+msgstr "Setting to remove mipmap in specified texture."
+
+msgid "TextureFineTuning:prop:ColorSpace"
+msgstr "ColorSpace"
+
+msgid "TextureFineTuning:prop:ColorSpace:tooltip"
+msgstr "Settings that specify the color space of specific texture."
+
+msgid "TextureFineTuning:prop:Linear"
+msgstr "Linear"
+
+msgid "AtlasTexture:prop:HeightDenominator"
+msgstr "HeightDivision    1 / "
+
+msgid "AtlasTexture:prop:IslandFineTuners"
+msgstr "IslandFineTuners"
+
+msgid "IIslandFineTuner:prop:IslandSelector"
+msgstr "IslandSelector"
+
+msgid "IIslandFineTuner:prop:SizeOffset"
+msgstr "SizeOffset"
+
+msgid "IIslandFineTuner:prop:SizeOffset"
+msgstr "SizeOffset"
+
+msgid "IIslandFineTuner:prop:OffsetValue"
+msgstr "OffsetValue"
+
+msgid "IIslandFineTuner:prop:SizePriority"
+msgstr "SizePriority"
+
+msgid "IIslandFineTuner:prop:PriorityValue"
+msgstr "PriorityValue"
+
+#  CommonDecal
+
+msgid "CommonDecal:label:RenderersSettings"
+msgstr "RenderersSettings"
+
+msgid "CommonDecal:prop:UseMaterialFiltering"
+msgstr "UseMaterialFiltering"
+
+msgid "CommonDecal:prop:AutoSelectFilterMaterials"
+msgstr "AutoSelectFilterMaterials"
+
+msgid "CommonDecal:prop:IncludingDisableRenderers"
+msgstr "IncludingDisableRenderers"
+
+msgid "CommonDecal:prop:TargetRenderer"
+msgstr "TargetRenderer"
+
+msgid "CommonDecal:prop:TargetRenderer:tooltip"
+msgstr "Item to set renderer on which decal are applied."
+
+msgid "CommonDecal:prop:MultiRendererMode"
+msgstr "MultiRendererMode"
+
+msgid "CommonDecal:prop:MultiRendererMode:tooltip"
+msgstr "A mode that allows you apply decal across multiple renderers."
+
+msgid "CommonDecal:label:TextureSettings"
+msgstr "TextureSettings"
+
+msgid "CommonDecal:prop:DecalTexture"
+msgstr "DecalTexture"
+
+msgid "CommonDecal:prop:DecalTexture:tooltip"
+msgstr "Item to specify the texture to be decal will be applied."
+
+msgid "CommonDecal:prop:Color"
+msgstr "Color"
+
+msgid "CommonDecal:prop:Color:tooltip"
+msgstr "Multiply color when decal texture is applied."
+
+msgid "CommonDecal:prop:BlendTypeKey"
+msgstr "BlendTypeKey"
+
+msgid "CommonDecal:prop:BlendTypeKey:tooltip"
+msgstr "Specific the Color blending mode when decal to target applied."
+
+msgid "CommonDecal:prop:TargetPropertyName"
+msgstr "TargetPropertyName"
+
+msgid "CommonDecal:prop:TargetPropertyName:tooltip"
+msgstr "Item to specify material property which decal to applied target."
+
+msgid "CommonDecal:label:AdvancedOption"
+msgstr "AdvancedOption"
+
+msgid "CommonDecal:prop:HighQualityPadding"
+msgstr "HighQualityPadding"
+
+msgid "CommonDecal:prop:HighQualityPadding:tooltip"
+msgstr "Feature to generate high quality padding without jagged edges. (take a lot of time)"
+
+msgid "CommonDecal:prop:Padding"
+msgstr "Padding"
+
+msgid "CommonDecal:prop:Padding:tooltip"
+msgstr "Setting width for padding generate."
+
+msgid "CommonDecal:label:GradationSettings"
+msgstr "GradationSettings"
+
+msgid "CommonDecal:label:DecalSettings"
+msgstr "DecalSettings"
+
+msgid "CommonDecal:prop:IslandSelector"
+msgstr "IslandSelector"
+
+#  SimpleDecal
+
+msgid "SimpleDecal:error:TTTNotExecutable"
+msgstr "AtlasTexture is not executable."
+
+msgid "SimpleDecal:error:TTTNotExecutable:hint"
+msgstr "Please review target renderers exist."
+
+msgid "SimpleDecal:info:TargetNotSet"
+msgstr "Target not set!"
+
+msgid "SimpleDecal:info:TargetNotFound"
+msgstr "Target not found!"
+
+msgid "SimpleDecal:label:ScaleSettings"
+msgstr "ScaleSettings"
+
+msgid "SimpleDecal:prop:Scale"
+msgstr "Scale"
+
+msgid "SimpleDecal:prop:Scale:tooltip"
+msgstr "Size of decal, X is width, Y is height."
+
+msgid "SimpleDecal:prop:FixedAspect"
+msgstr "FixedAspect"
+
+msgid "SimpleDecal:prop:FixedAspect:tooltip"
+msgstr "Setting to adjustment height of the decal to correspond with the texture ratio."
+
+msgid "SimpleDecal:prop:MaxDistance"
+msgstr "MaxDistance"
+
+msgid "SimpleDecal:prop:MaxDistance:tooltip"
+msgstr "デカールが張られる最大の距離"
+
+msgid "SimpleDecal:label:CullingSettings"
+msgstr "CullingSettings"
+
+msgid "SimpleDecal:prop:PolygonCulling"
+msgstr "PolygonCulling"
+
+msgid "SimpleDecal:prop:PolygonCulling:tooltip"
+msgstr "Setting the criteria for polygon culling."
+
+msgid "SimpleDecal:prop:BackCulling"
+msgstr "BackCulling"
+
+msgid "SimpleDecal:prop:BackCulling:tooltip"
+msgstr "Setting to cull back side polygon when view from the decal."
+
+msgid "SimpleDecal:prop:IslandSelector"
+msgstr "IslandSelect"
+
+msgid "SimpleDecal:prop:ExperimentalFuture:UseDepth"
+msgstr "UseDepth"
+
+msgid "SimpleDecal:prop:ExperimentalFuture:UseDepth:tooltip"
+msgstr "Setting the maximum distance of island selector."
+
+msgid "SimpleDecal:prop:ExperimentalFuture:DepthInvert"
+msgstr "DepthInvert"
+
+msgid "SimpleDecal:prop:ExperimentalFuture:DepthInvert:tooltip"
+msgstr "Setting to reverse「Foremost only」to「Other than the foremost」."
+
+msgid "SimpleDecal:button:RealTimePreview"
+msgstr "RealTimePreview"
+
+msgid "SimpleDecal:button:RealTimePreview:tooltip"
+msgstr "A feature that allow decal preview in real time. also multiple preview at the some time."
+
+msgid "SimpleDecal:button:ExitRealTimePreview"
+msgstr "ExitRealTimePreview"
+
+msgid "SimpleDecal:button:AllExit"
+msgstr "AllExit"
+
+msgid "SimpleDecal:button:AllExit:tooltip"
+msgstr "Exit all decal real time preview."
+
+msgid "SimpleDecal:info:ScaleInvert"
+msgstr "Scale of the Decal is inverted!\nIt may unintended behavior such as being decal only on the back side!"
+
+# TexTransGroup
+
+msgid "SimpleDecal:label:DuringPreviewNoSummary"
+msgstr "Summary display during preview is not supported."
+
+msgid "TexTransGroup:prop:GOEnable"
+msgstr "Enable"
+
+msgid "TexTransGroup:label:SummaryNone"
+msgstr "SummaryNone"
+
+msgid "TexTransGroup:label:GroupChildren"
+msgstr "GroupChildren"
+
+# GradationDecal
+
+msgid "GradationDecal:info:TargetNotSet"
+msgstr "Target not set!"
+
+msgid "GradationDecal:info:TargetNotFound"
+msgstr "Target not found!"
+
+msgid "GradationDecal:prop:Gradient"
+msgstr "Gradient"
+
+msgid "GradationDecal:prop:Alpha"
+msgstr "Alpha"
+
+msgid "GradationDecal:prop:BlendTypeKey"
+msgstr "BlendTypeKey"
+
+msgid "GradationDecal:prop:TargetPropertyName"
+msgstr "TargetPropertyName"
+
+msgid "GradationDecal:prop:GradientClamp"
+msgstr "GradientClamp"
+
+# SingleGradationDecal
+
+msgid "SingleGradationDecal:prop:SelectedMaterialView"
+msgstr "SelectedMaterialView"
+
+msgid "SingleGradationDecal:prop:GradationLength"
+msgstr "GradationLength"
+
+# DistanceGradationDecal
+
+msgid "DistanceGradationDecal:prop:GradationMinDistance"
+msgstr "GradationMinDistance"
+
+msgid "DistanceGradationDecal:prop:GradationMaxDistance"
+msgstr "GradationMaxDistance"
+
+# TextureBlender
+
+msgid "TextureBlender:info:TargetNotSet"
+msgstr "Target not set!"
+
+msgid "TextureBlender:info:TargetNotFound"
+msgstr "Target not found!"
+
+# TextureConfigurator
+
+msgid "TextureConfigurator:info:TargetNotSet"
+msgstr "適用対象が設定されていません！"
+
+msgid "TextureConfigurator:error:TargetNotFound"
+msgstr "Target not found!"
+
+# MaterialModifier
+
+msgid "MaterialModifier:info:TargetNotSet"
+msgstr "Target not Set!"
+
+msgid "MaterialModifier:info:TargetNotFound"
+msgstr "Target not found!"
+
+msgid "MaterialModifier:info:NullShader"
+msgstr "Target shader not found!"
+
+# MaterialOverrideTransfer
+
+msgid "MaterialOverrideTransfer:info:TargetNotSet"
+msgstr "Target not Set!"
+
+msgid "MaterialOverrideTransfer:info:VariantNotSet"
+msgstr "MaterialVariant not Set!"
+
+msgid "MaterialOverrideTransfer:info:TargetNotFound"
+msgstr "Target not found!"
+
+# MultiLayerImageCanvas
+
+msgid "MultiLayerImageCanvas:info:TargetNotSet"
+msgstr "Target not set!"
+
+msgid "MultiLayerImageCanvas:info:TargetNotFound"
+msgstr "Target not found!"
+
+# NegotiateAAO
+
+msgid "NegotiateAAO:warn:UVEvacuationFailed"
+msgstr "Failed to evacuate UV as all UV channels are used!"
+
+msgid "NegotiateAAO:warn:UVEvacuationFailed:description"
+msgstr "If there is no problem, ignore this warning."
+
+# IslandSelector
+
+msgid "IslandSelector:button:AimStart"
+msgstr "AimStart"
+
+msgid "IslandSelector:button:AimExit"
+msgstr "AimExit"
+
+# AsLayer
+
+msgid "AsLayer:button:AddLayer"
+msgstr "Add AsLayer to make it a layer"
+
+# TextureBlender
+
+msgid "TextureBlender:prop:TargetTexture"
+msgstr "TargetTexture"
+
+msgid "TextureBlender:prop:BlendTexture"
+msgstr "BlendTexture"
+
+msgid "TextureBlender:prop:Color"
+msgstr "Color"
+
+msgid "TextureBlender:prop:BlendTypeKey"
+msgstr "BlendTypeKey"
+
+# TextureSelector
+
+msgid "TextureSelector:prop:OpenSelector"
+msgstr "OpenSelector"
+
+msgid "TextureSelector:prop:SelectTexture"
+msgstr "SelectTexture"
+
+msgid "TextureSelector:prop:RendererAsPath"
+msgstr "RendererAsPath"
+
+msgid "TextureSelector:prop:SlotAsPath"
+msgstr "SlotAsPath"
+
+msgid "TextureSelector:prop:PropertyNameAsPath"
+msgstr "PropertyNameAsPath"
+
+msgid "TextureSelector:prop:SelectTexturePreview"
+msgstr "SelectTexturePreview"

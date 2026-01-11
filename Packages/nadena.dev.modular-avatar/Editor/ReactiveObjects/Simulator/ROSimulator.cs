@@ -1,5 +1,4 @@
-﻿#if MA_VRCSDK3_AVATARS
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -239,6 +238,8 @@ namespace nadena.dev.modular_avatar.core.editor.Simulator
 
         private void UpdateSelection()
         {
+            if (f_inspecting == null) return;
+            
             currentSelection = locked ? f_inspecting.value as GameObject : Selection.activeGameObject;
             f_inspecting.SetValueWithoutNotify(currentSelection);
 
@@ -249,7 +250,13 @@ namespace nadena.dev.modular_avatar.core.editor.Simulator
         {
             _refreshPending = false;
             
-            var avatar = RuntimeUtil.FindAvatarInParents(currentSelection?.transform);
+            if (currentSelection == null)
+            {
+                e_debugInfo.style.display = DisplayStyle.None;
+                return;
+            }
+
+            var avatar = RuntimeUtil.FindAvatarTransformInParents(currentSelection.transform);
             
             if (avatar == null)
             {
@@ -639,4 +646,3 @@ namespace nadena.dev.modular_avatar.core.editor.Simulator
         }
     }
 }
-#endif

@@ -58,7 +58,8 @@ namespace nadena.dev.modular_avatar.core.editor.plugin
                 seq.Run(ScaleAdjusterPass.Instance).PreviewingWith(new ScaleAdjusterPreview());
 
 #if MA_VRCSDK3_AVATARS
-                seq.Run(RenameCollisionTagsPass.Instance);
+				seq.Run(VRChatGlobalColliderPass.Instance);
+				seq.Run(RenameCollisionTagsPass.Instance);
                 seq.Run(ReactiveObjectPrepass.Instance);
 #endif
 
@@ -309,6 +310,8 @@ namespace nadena.dev.modular_avatar.core.editor.plugin
         }
     }
 
+    [DependsOnContext(typeof(ModularAvatarContext))]
+    [DependsOnContext(typeof(AnimatorServicesContext))]
     class GCGameObjectsPluginPass : MAPass<GCGameObjectsPluginPass>
     {
         protected override void Execute(ndmf.BuildContext context)

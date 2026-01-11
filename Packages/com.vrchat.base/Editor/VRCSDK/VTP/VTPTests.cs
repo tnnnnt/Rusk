@@ -28,9 +28,6 @@ namespace VRC.SDKBase.Editor.VTP
 
             TestSendAvatar(fileContents, clientNetworkStream, serverNetworkStream);
             TestSendWorld(fileContents, clientNetworkStream, serverNetworkStream);
-#if VRC_ENABLE_PROPS
-            TestSendProp(fileContents, clientNetworkStream, serverNetworkStream);
-#endif
 
             TestError(clientNetworkStream, serverNetworkStream);
         }
@@ -130,28 +127,6 @@ namespace VRC.SDKBase.Editor.VTP
             }
         }
         
-#if VRC_ENABLE_PROPS
-        public void TestSendProp(byte[] fileContents, MockNetworkStream clientNetworkStream, MockNetworkStream serverNetworkStream, int fileSizeLimit = VRChatTestProtocol.MaxFileSize)
-        {
-            { // SERVER: Send prop to client
-                string path = Path.Combine(Path.GetTempPath(), $"test-prop-{GUID.Generate()}.bin" );
-                File.WriteAllBytes(path, fileContents);
-                
-                using BinaryWriter writer = new BinaryWriter(serverNetworkStream);
-                VRChatTestProtocol.WriteSendProp(writer, path, "test prop");
-                File.Delete(path);
-            }
-            { // CLIENT: Read prop from server
-                BinaryWriter errorWriter = new BinaryWriter(clientNetworkStream);
-                using BinaryReader reader = new BinaryReader(clientNetworkStream);
-                Assert.AreEqual( (VTP_PacketID) reader.ReadInt32(), VTP_PacketID.SendProp); // Read packet ID
-                string outputPath = VRChatTestProtocol.ReadPropFileToStream(reader, clientNetworkStream, errorWriter, CancellationToken.None,fileSizeLimit);
-                byte[] outputBytes = File.ReadAllBytes(outputPath);
-                Assert.AreEqual(fileContents, outputBytes);
-                File.Delete(outputPath);
-            }
-        }
-#endif
         
         [Test]
         public void TestSendAvatarTooBig()
@@ -183,22 +158,6 @@ namespace VRC.SDKBase.Editor.VTP
             });
         }
         
-#if VRC_ENABLE_PROPS
-        [Test]
-        public void TestSendPropTooBig()
-        {
-            MemoryStream clientOutServerIn = new MemoryStream();
-            MemoryStream clientInServerOut = new MemoryStream();
-            
-            MockNetworkStream clientNetworkStream = new MockNetworkStream(clientInServerOut, clientOutServerIn);
-            MockNetworkStream serverNetworkStream = new MockNetworkStream(clientOutServerIn, clientInServerOut);
-            
-            Assert.Throws<VTPFileSizeException>(() =>
-            {
-                TestSendProp(new byte[100], clientNetworkStream, serverNetworkStream, fileSizeLimit: 10);
-            });
-        }
-#endif
         
         private void TestError(MockNetworkStream clientNetworkStream, MockNetworkStream serverNetworkStream)
         {

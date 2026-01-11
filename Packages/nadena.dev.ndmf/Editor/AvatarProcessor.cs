@@ -62,6 +62,11 @@ namespace nadena.dev.ndmf
         internal static string TemporaryAssetRoot = "Packages/nadena.dev.ndmf/__Generated";
 
         /// <summary>
+        /// Event that is invoked when an avatar is manually processed.
+        /// </summary>
+        public static event Action<GameObject, INDMFPlatformProvider> OnManualProcessAvatar;
+
+        /// <summary>
         /// Deletes all temporary assets after a build.
         /// </summary>
         public static void CleanTemporaryAssets()
@@ -84,18 +89,27 @@ namespace nadena.dev.ndmf
             return PlatformExtensions.CanProcessObject(avatar);
         }
 
+        [Obsolete("ProcessAvatarUI() does not handle platforms correctly. Please use ManualProcessAvatar() instead, and specify VRChatPlatform to retain the behavior of ProcessAvatarUI().")]
+        public static GameObject ProcessAvatarUI(GameObject obj)
+        {
+            return ManualProcessAvatar(obj, AmbientPlatform.DefaultPlatform);
+        }
+
         /// <summary>
         /// Process an avatar on request by the user. The resulting assets will be saved in a persistent directory
         /// that will not be cleaned up by CleanTemporaryAssets.
         /// </summary>
         /// <param name="obj"></param>
+        /// <param name="platform"></param>
         /// <returns></returns>
-        public static GameObject ProcessAvatarUI(GameObject obj)
+        [PublicAPI]
+        public static GameObject ManualProcessAvatar(GameObject obj, INDMFPlatformProvider platform = null)
         {
             using (new OverrideTemporaryDirectoryScope("Assets/ZZZ_GeneratedAssets"))
             {
                 var avatar = UnityObject.Instantiate(obj);
-                var buildContext = new BuildContext(avatar, TemporaryAssetRoot);
+                platform ??= AmbientPlatform.CurrentPlatform;
+                var buildContext = new BuildContext(avatar, TemporaryAssetRoot, platform);
 
                 avatar.transform.position += Vector3.forward * 2f;
                 try
@@ -105,6 +119,7 @@ namespace nadena.dev.ndmf
 
                     buildContext.Finish();
 
+                    OnManualProcessAvatar?.Invoke(avatar, platform);
                     return avatar;
                 }
                 finally

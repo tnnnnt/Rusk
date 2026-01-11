@@ -25,11 +25,18 @@ namespace VF.Service.Compressor {
         public int GetIndexBitCount() {
             if (useBadPriorityMethod) {
                 return 8;
-            } else if (GetBatchCount() <= 2) {
-                return 1;
-            } else {
-                return 2;
             }
+
+            return GetIndexBitCount(GetBatchCount());
+        }
+
+        public static int GetIndexBitCount(int batchCount) {
+            var maxSyncId = batchCount + 1;
+            var bits = 1;
+            while ((1 << bits) < maxSyncId) {
+                bits++;
+            }
+            return bits;
         }
 
         public int GetFinalCost(int originalCost) {

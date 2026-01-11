@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: -1506855854, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
   m_Name: VRCFury Params
   m_EditorClassIdentifier: 
-  isEmpty: 1
+  isEmpty: 0
   parameters:
   - name: VF N
     valueType: 2
@@ -24,29 +24,29 @@ MonoBehaviour:
     saved: 0
     defaultValue: 0
     networkSynced: 0
-  - name: VF 3.8.2
+  - name: VF 3.10.1
     valueType: 2
     saved: 0
     defaultValue: 0
     networkSynced: 0
-  - name: VF 1.1267.0
+  - name: VF 1.1278.0
     valueType: 2
     saved: 0
     defaultValue: 0
     networkSynced: 0
-  - name: himo_IsGrabbed
-    valueType: 2
-    saved: 0
+  - name: VRCEmote
+    valueType: 0
+    saved: 1
     defaultValue: 0
     networkSynced: 1
-  - name: main on
-    valueType: 2
-    saved: 0
+  - name: VRCFaceBlendH
+    valueType: 1
+    saved: 1
     defaultValue: 0
     networkSynced: 1
-  - name: se onoff
-    valueType: 2
-    saved: 0
+  - name: VRCFaceBlendV
+    valueType: 1
+    saved: 1
     defaultValue: 0
     networkSynced: 1
   - name: HR
@@ -57,7 +57,7 @@ MonoBehaviour:
   - name: isHRActive
     valueType: 2
     saved: 0
-    defaultValue: 1
+    defaultValue: 0
     networkSynced: 1
   - name: AvatarLimbScaling_Reset
     valueType: 2

@@ -73,6 +73,17 @@ namespace VRC.Editor
 
         private static bool _requestConfigureSettings = true;
 
+        private static readonly Lazy<string> _debugCategoryName = new Lazy<string>(InitializeLogging);
+        private static string DebugCategoryName => _debugCategoryName.Value;
+
+        private static string InitializeLogging()
+        {
+            const string categoryName = "EnvConfig";
+            VRC.Core.Logger.DescribeCategory(categoryName, "EC", VRC.Core.Logger.Color.cyan);
+            //VRC.Core.Logger.EnableCategory(categoryName);
+            return categoryName;
+        }
+
         static EnvConfig()
         {
             EditorApplication.update += EditorUpdate;
@@ -217,7 +228,7 @@ namespace VRC.Editor
         [MenuItem("VRChat SDK/Utilities/Force Configure Player Settings")]
         public static void ConfigurePlayerSettings()
         {
-            VRC.Core.Logger.Log("Setting required PlayerSettings...");
+            VRC.Core.Logger.Log("Setting required PlayerSettings...", DebugCategoryName);
 
             SetBuildTarget();
 
@@ -306,10 +317,10 @@ namespace VRC.Editor
                 throw new ArgumentNullException(nameof(sdkNames));
             }
 
-            VRC.Core.Logger.Log("Setting virtual reality SDKs in PlayerSettings: ");
+            VRC.Core.Logger.Log("Setting virtual reality SDKs in PlayerSettings: ", DebugCategoryName);
             foreach(string s in sdkNames)
             {
-                VRC.Core.Logger.Log("- " + s);
+                VRC.Core.Logger.Log("- " + s, DebugCategoryName);
             }
 
             if(!EditorApplication.isPlaying)
@@ -375,7 +386,7 @@ namespace VRC.Editor
                             
                             if (XRPackageMetadataStore.AssignLoader(pluginsSettings, loader.loaderType, buildTargetGroup))
                             {
-                                VRC.Core.Logger.Log($"Assigned XR loader - {loader.loaderType} (buildTargetGroup: {buildTargetGroup})");
+                                VRC.Core.Logger.Log($"Assigned XR loader - {loader.loaderType} (buildTargetGroup: {buildTargetGroup})", DebugCategoryName);
                             }
                         }
                         else
@@ -389,7 +400,7 @@ namespace VRC.Editor
                             
                             if (XRPackageMetadataStore.RemoveLoader(pluginsSettings, loader.loaderType, buildTargetGroup))
                             {
-                                VRC.Core.Logger.Log($"Removed XR loader - {loader.loaderType} (buildTargetGroup: {buildTargetGroup})");
+                                VRC.Core.Logger.Log($"Removed XR loader - {loader.loaderType} (buildTargetGroup: {buildTargetGroup})", DebugCategoryName);
                             }
                         }
                     }
@@ -480,7 +491,7 @@ namespace VRC.Editor
 
         private static void SetDefaultGraphicsAPIs()
         {
-            VRC.Core.Logger.Log("Setting Graphics APIs");
+            VRC.Core.Logger.Log("Setting Graphics APIs", DebugCategoryName);
             foreach(BuildTarget target in relevantBuildTargets)
             {
                 GraphicsDeviceType[] apis = allowedGraphicsAPIs[target];
@@ -537,7 +548,7 @@ namespace VRC.Editor
 
         internal static void SetQualitySettings()
         {
-            VRC.Core.Logger.Log("Setting Graphics Settings");
+            VRC.Core.Logger.Log("Setting Quality Settings", DebugCategoryName);
             const string qualitySettingsAssetPath = "ProjectSettings/QualitySettings.asset";
             SerializedObject qualitySettings = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath(qualitySettingsAssetPath)[0]);
 
@@ -709,7 +720,7 @@ namespace VRC.Editor
 
         internal static void SetGraphicsSettings()
         {
-            VRC.Core.Logger.Log("Setting Graphics Settings");
+            VRC.Core.Logger.Log("Setting Graphics Settings", DebugCategoryName);
 
             const string graphicsSettingsAssetPath = "ProjectSettings/GraphicsSettings.asset";
             SerializedObject graphicsManager = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath(graphicsSettingsAssetPath)[0]);
@@ -925,7 +936,7 @@ namespace VRC.Editor
 
         public static FogSettings GetFogSettings()
         {
-            VRC.Core.Logger.Log("Force-enabling Fog");
+            VRC.Core.Logger.Log("Force-enabling Fog", DebugCategoryName);
 
             const string graphicsSettingsAssetPath = "ProjectSettings/GraphicsSettings.asset";
             SerializedObject graphicsManager = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath(graphicsSettingsAssetPath)[0]);
@@ -949,7 +960,7 @@ namespace VRC.Editor
 
         public static void SetFogSettings(FogSettings fogSettings)
         {
-            VRC.Core.Logger.Log("Force-enabling Fog");
+            VRC.Core.Logger.Log("Force-enabling Fog", DebugCategoryName);
 
             const string graphicsSettingsAssetPath = "ProjectSettings/GraphicsSettings.asset";
             SerializedObject graphicsManager = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath(graphicsSettingsAssetPath)[0]);
@@ -1248,7 +1259,7 @@ namespace VRC.Editor
 
         private static void SetBuildTarget()
         {
-        VRC.Core.Logger.Log("Setting build target");
+        VRC.Core.Logger.Log("Setting build target", DebugCategoryName);
 
         BuildTarget target = UnityEditor.EditorUserBuildSettings.activeBuildTarget;
 

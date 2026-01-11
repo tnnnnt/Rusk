@@ -61,9 +61,11 @@
         #pragma shader_feature_fragment _ _SPECULARHIGHLIGHTS_OFF
         #pragma shader_feature_fragment _ _GLOSSYREFLECTIONS_OFF
         #pragma shader_feature_fragment _ _MONOSH_SPECULAR _MONOSH_NOSPECULAR
-        #pragma dynamic_branch_local_fragment _ _ENABLE_GEOMETRIC_SPECULAR_AA
-        #pragma dynamic_branch_local_fragment _ _EMISSION
-        #pragma dynamic_branch_local_fragment _ DISABLE_VERTEX_COLORING
+        // due to a Unity bug - we cannot use dynamic_branch in a surface shader in the SDK, as it prevents objects from being baked
+        // any shader with a `dynamic_branch` inside of a Meta pass will fail to compile for lightmapping
+        #pragma shader_feature_fragment _ _ENABLE_GEOMETRIC_SPECULAR_AA
+        #pragma shader_feature_fragment _ _EMISSION
+        #pragma shader_feature_fragment _ DISABLE_VERTEX_COLORING
         //SDK-SYNC-IGNORE-LINE - unused variants in SDK projects - #pragma multi_compile_fragment _ FORCE_UNITY_DLDR_LIGHTMAP_ENCODING FORCE_UNITY_RGBM_LIGHTMAP_ENCODING FORCE_UNITY_LIGHTMAP_FULL_HDR_ENCODING UNITY_LIGHTMAP_NONE
         //#pragma multi_compile _ _BICUBIC
 
@@ -142,8 +144,9 @@
         {
             // Albedo comes from a texture tinted by color
             half4 albedoMap = UNITY_SAMPLE_TEX2D(_MainTex, IN.texcoord0) * _Color;
-            if(!DISABLE_VERTEX_COLORING)
-                albedoMap *= IN.color;
+            #if !defined(DISABLE_VERTEX_COLORING) //SDK-SYNC-IGNORE-LINE
+                albedoMap *= IN.color;  //SDK-SYNC-IGNORE-LINE
+            #endif //SDK-SYNC-IGNORE-LINE
             o.Albedo = albedoMap.rgb;
 
             // Metallic and smoothness come from slider variables
@@ -168,7 +171,9 @@
                 o.Normal = half3(0, 0, 1);
             }
 
-            o.SpecularAA = _ENABLE_GEOMETRIC_SPECULAR_AA;
+            #if defined(_ENABLE_GEOMETRIC_SPECULAR_AA) //SDK-SYNC-IGNORE-LINE
+                o.SpecularAA = 1; //SDK-SYNC-IGNORE-LINE
+            #endif //SDK-SYNC-IGNORE-LINE
             o.SpecularAAVariance = _SpecularAAScreenSpaceVariance;
             o.SpecularAAThreshold = _SpecularAAThreshold;
 
@@ -194,8 +199,9 @@
                 }
             #endif
 
-            UNITY_BRANCH if (_EMISSION)
-                o.Emission = UNITY_SAMPLE_TEX2D(_EmissionMap, IN.texcoord0) * _EmissionColor;
+            #if defined(_EMISSION) //SDK-SYNC-IGNORE-LINE
+                o.Emission = UNITY_SAMPLE_TEX2D(_EmissionMap, IN.texcoord0) * _EmissionColor; //SDK-SYNC-IGNORE-LINE
+            #endif //SDK-SYNC-IGNORE-LINE
         }
         ENDCG
     }

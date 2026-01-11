@@ -22,6 +22,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Deprecated
 
+## [1.15.1] - [2025-12-06]
+
+### Fixed
+- [#1826] Fixed an issue where `MA Menu Item`s whose parameter is defined in a `MA Parameters` component could end up
+  with a value of zero.
+- [#1828] Fixed an issue where using `MA Scale Adjuster` on a non-humanoid avatar would result in a build error.
+
+## [1.15.0] - [2025-12-03]
+
+### Added
+- Added `MA Fit Preview`, a new feature which allows you to pose a copy of your avatar, with physbones moving in edit mode.
+  - You can adjust constraint and physbone settings, and have them reflected in the preview copy in real time.
+- [#1786] Implement `MA Global Collider`
+  - This feature was contributed by @ZenithVal!
+- [#1769] Added warning when VRCFury version < 1.1250.0 is present with Mesh Cutter or Shape Changer delete mode components, as these combinations are incompatible.
+- [#1804] Added support for the `IsAnimatorEnabled` VRChat built-in parameter
+
+### Fixed
+- [#1791] `World Fixed Object` would double the scale of objects it's attached to
+- [#1778] `Vertex Filter - By Axis` would leave the transform handle disabled when switching away from the object while
+  in edit mode.
+- [#1799] `Convert Constraints` would fail to fix animations if a constraint was replaced by `Replace Object` 
+- [#1808] Improved performance of preview logic, particularly when there are a very large number of disabled avatars
+- [#1812] `Scale Adjuster` can now adjust the length of humanoid bones
+- [#1818] Fixed compile errors when VRCSDK is not present in the project
+- [#1823] Reaction Debugger may throw `MissingReferenceException`
+
+### Changed
+- [#1784] Removed dependency on `com.vrchat.avatars`
+- [#1776] Mesh Cutter components parented underneath their target mesh, will ignore that mesh and its parents when
+  considering
+  whether they are constant-on.
+    - This improves performance, and improves compatibility with non-VRChat platforms.
+- [#1815] Modular Avatar will no longer garbage collect unused objects when they are referenced by an animation
+
 ## [1.14.3] - [2025-09-18]
 
 ### Fixed

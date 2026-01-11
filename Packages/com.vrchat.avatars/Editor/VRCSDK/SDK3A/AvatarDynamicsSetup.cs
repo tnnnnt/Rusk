@@ -11,61 +11,47 @@ using VRC.Core.Pool;
 using VRC.SDK3.Avatars.Components;
 using VRC.SDK3.Dynamics.PhysBone;
 using VRC.Dynamics;
+using VRC.SDK3.Dynamics;
 using VRC.SDKBase.Validation;
 using Object = UnityEngine.Object;
 
 namespace VRC.SDK3.Avatars
 {
+    /// <summary>
+    /// Avatar specific VRC dynamics setup.
+    /// </summary>
     public static class AvatarDynamicsSetup
     {
         [InitializeOnLoadMethod]
         private static void EditorInit()
         {
-            VRCConstraintManager.CanExecuteConstraintJobsInEditMode = SDKBase.Editor.VRCSettings.VrcConstraintsInEditMode;
-            EditorApplication.playModeStateChanged += HandlePlayModeStateChanged;
-        }
-
-        private static void HandlePlayModeStateChanged(PlayModeStateChange stateChange)
-        {
-            switch (stateChange)
-            {
-                case PlayModeStateChange.EnteredPlayMode:
-                case PlayModeStateChange.ExitingPlayMode:
-                    VRCAvatarDynamicsScheduler.HandleEditorPlayModeToggle();
-                    break;
-            }
+            DynamicsComponent.DefaultUsage = DynamicsUsage.Avatar;
         }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void RuntimeInit()
+        private static void RuntimeInitInitializeEvents()
         {
-            //Triggers Manager
-            if (ContactManager.Inst == null)
-            {
-                var obj = new GameObject("TriggerManager");
-                UnityEngine.Object.DontDestroyOnLoad(obj);
-                ContactManager.Inst = obj.AddComponent<ContactManager>();
-            }
+            //Contacts
+            ContactBase.OnInitialize = Contact_OnInitialize;
 
-            //Triggers
-            ContactBase.OnInitialize = Trigger_OnInitialize;
-
-            //PhysBone Manager
-            if (PhysBoneManager.Inst == null)
-            {
-                var obj = new GameObject("PhysBoneManager");
-                UnityEngine.Object.DontDestroyOnLoad(obj);
-
-                PhysBoneManager.Inst = obj.AddComponent<PhysBoneManager>();
-                PhysBoneManager.Inst.IsSDK = true;
-                PhysBoneManager.Inst.Init();
-                obj.AddComponent<PhysBoneGrabHelper>();
-            }
+            //PhysBones
             VRCPhysBoneBase.OnInitialize = PhysBone_OnInitialize;
+            VRCPhysBoneColliderBase.OnPreShapeInitialize += PhysBoneCollider_OnPreShapeInitialize;
         }
-        private static bool Trigger_OnInitialize(ContactBase trigger)
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+        private static void RuntimeInitPhysBoneGrabHelper()
         {
-            var receiver = trigger as ContactReceiver;
+            // PhysBoneManager singleton should exist following DynamicsSetup.
+            PhysBoneManager.Inst.gameObject.AddComponent<PhysBoneGrabHelper>();
+        }
+
+
+        private static bool Contact_OnInitialize(ContactBase contact)
+        {
+            contact.Usage = DynamicsUsage.Avatar;
+
+            var receiver = contact as ContactReceiver;
             if (receiver != null && !string.IsNullOrWhiteSpace(receiver.parameter))
             {
                 var avatarDesc = receiver.GetComponentInParent<VRCAvatarDescriptor>();
@@ -82,8 +68,11 @@ namespace VRC.SDK3.Avatars
 
             return true;
         }
+
         private static void PhysBone_OnInitialize(VRCPhysBoneBase physBone)
         {
+            physBone.Usage = DynamicsUsage.Avatar;
+
             if (!string.IsNullOrEmpty(physBone.parameter))
             {
                 var avatarDesc = physBone.GetComponentInParent<VRCAvatarDescriptor>();
@@ -100,6 +89,11 @@ namespace VRC.SDK3.Avatars
                     }
                 }
             }
+        }
+
+        private static void PhysBoneCollider_OnPreShapeInitialize(VRCPhysBoneColliderBase physBoneCollider)
+        {
+            physBoneCollider.Usage = DynamicsUsage.Avatar;
         }
 
         #region PhysBone Conversion

@@ -19,6 +19,15 @@ The format is based on [Keep a Changelog].
 
 ### Security
 
+## [1.8.16] - 2025-12-03
+### Changed
+- Streaming mipmap settings are copied when processing textures [`#1558`](https://github.com/anatawa12/AvatarOptimizer/pull/1558)
+
+## [1.8.15] - 2025-11-24
+### Added
+- Support for VRCSDK 3.10.x [`#1562`](https://github.com/anatawa12/AvatarOptimizer/pull/1562) [`#1570`](https://github.com/anatawa12/AvatarOptimizer/pull/1570)
+  - New internal component ParentChangeDetector is added
+
 ## [1.8.14] - 2025-10-04
 ### Fixed
 - Optimize Texture will break EmissionMap of ToonStandarad [`#1525`](https://github.com/anatawa12/AvatarOptimizer/pull/1525)
@@ -1941,7 +1950,9 @@ This release is mistake.
 - Merge Bone
 - Clear Endpoint Position
 
-[Unreleased]: https://github.com/anatawa12/AvatarOptimizer/compare/v1.8.14...HEAD
+[Unreleased]: https://github.com/anatawa12/AvatarOptimizer/compare/v1.8.16...HEAD
+[1.8.16]: https://github.com/anatawa12/AvatarOptimizer/compare/v1.8.15...v1.8.16
+[1.8.15]: https://github.com/anatawa12/AvatarOptimizer/compare/v1.8.14...v1.8.15
 [1.8.14]: https://github.com/anatawa12/AvatarOptimizer/compare/v1.8.14-beta.2...v1.8.14
 [1.8.14-beta.2]: https://github.com/anatawa12/AvatarOptimizer/compare/v1.8.14-beta.1...v1.8.14-beta.2
 [1.8.14-beta.1]: https://github.com/anatawa12/AvatarOptimizer/compare/v1.8.13...v1.8.14-beta.1

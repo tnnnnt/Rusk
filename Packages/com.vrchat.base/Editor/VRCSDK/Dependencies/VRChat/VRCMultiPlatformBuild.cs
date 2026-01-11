@@ -9,9 +9,6 @@ using VRC.SDKBase.Editor.Api;
 
 [assembly: InternalsVisibleTo("VRC.SDK3A.Editor")]
 [assembly: InternalsVisibleTo("VRC.SDK3.Editor")]
-#if VRC_ENABLE_PROPS
-[assembly: InternalsVisibleTo("VRC.SDK3P.Editor")]
-#endif
 
 namespace VRC.SDKBase
 {

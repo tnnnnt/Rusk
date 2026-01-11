@@ -12,6 +12,8 @@ using UnityEngine.Rendering;
 #if !VRC_CLIENT
 using VRC.Core;
 using VRC.SDKBase.Editor.Api;
+#else
+using ZLinq;
 #endif
 using File = UnityEngine.Windows.File;
 using Object = UnityEngine.Object;
@@ -21,9 +23,6 @@ using UnityEngine.Rendering.PostProcessing;
 
 [assembly: InternalsVisibleTo("VRC.SDK3A.Editor")]
 [assembly: InternalsVisibleTo("VRC.SDK3.Editor")]
-#if VRC_ENABLE_PROPS
-[assembly: InternalsVisibleTo("VRC.SDK3P.Editor")]
-#endif
 namespace VRC.SDKBase
 {
     public static class VRC_EditorTools
@@ -472,7 +471,16 @@ namespace VRC.SDKBase
 #if !VRC_CLIENT
         internal static string CropImage(string sourcePath, float width, float height, bool centerCrop = true, bool forceLinear = false, bool forceGamma = false)
         {
-            var bytes = File.ReadAllBytes(sourcePath);
+            // read all bytes from the image file without blocking access
+            var nonBlockingFileHandle = System.IO.File.Open(sourcePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            var bytes = new byte[nonBlockingFileHandle.Length];
+            var bytesRead = nonBlockingFileHandle.Read(bytes, 0, (int)nonBlockingFileHandle.Length);
+            if (bytesRead != nonBlockingFileHandle.Length)
+            {
+                Core.Logger.LogError($"Failed to read all bytes from {sourcePath}");
+                return null;
+            }
+            nonBlockingFileHandle.Close();
             var tex = new Texture2D(2, 2)
             {
                 wrapMode = TextureWrapMode.Clamp

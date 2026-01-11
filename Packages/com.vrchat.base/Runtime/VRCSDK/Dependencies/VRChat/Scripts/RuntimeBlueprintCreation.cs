@@ -233,7 +233,7 @@ namespace VRCSDK2
 
             if (string.IsNullOrEmpty(apiAvatar.id))
             {
-                pipelineManager.AssignId();
+                pipelineManager.AssignId(PipelineManager.ContentType.avatar);
                 apiAvatar.id = pipelineManager.blueprintId;
             }
 
@@ -243,7 +243,7 @@ namespace VRCSDK2
 
             if (!string.IsNullOrEmpty(unityPackagePath) && System.IO.File.Exists(unityPackagePath))
             {
-                VRC.Core.Logger.Log("Found unity package path. Preparing to upload!");
+                VRC.Core.Logger.Log("Found unity package path. Preparing to upload!", API.LOG_CATEGORY);
                 PrepareUnityPackageForS3(unityPackagePath, avatarId, version, ApiAvatar.VERSION);
             }
 

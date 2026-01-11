@@ -59,6 +59,11 @@
             "name": "Unity",
             "expression": "",
             "define": "ANATAWA12_GISTS_VPM_PACKAGE"
+        },
+        {
+            "name": "Unity",
+            "expression": "",
+            "define": "GIST_a4bb4e2e5d75b4fa5ba42e236aae564d"
         }
     ],
     "noEngineReferences": false
